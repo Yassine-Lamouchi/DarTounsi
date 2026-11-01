@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 3: Activity Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 3: AI Matchmaking &amp; Payments</h1>
+<h2>Activity Diagram — Admin Approval &amp; Premium Payment (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1100" width="1000" height="1100">
+
+  <!-- Swimlanes -->
+  <rect x="30" y="40" width="270" height="1030" fill="#fef9f0" stroke="#e85d04" stroke-width="1.5" rx="5"/>
+  <text x="165" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#e85d04">Owner</text>
+
+  <rect x="300" y="40" width="240" height="1030" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.5" rx="5"/>
+  <text x="420" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a90d9">System (API + DB)</text>
+
+  <rect x="540" y="40" width="210" height="1030" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.5" rx="5"/>
+  <text x="645" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">Admin</text>
+
+  <rect x="750" y="40" width="220" height="1030" fill="#fff3e0" stroke="#e65100" stroke-width="1.5" rx="5"/>
+  <text x="860" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">Konnect Payment</text>
+
+  <!-- Initial node -->
+  <circle cx="165" cy="100" r="10" fill="#333"/>
+  <line x1="165" y1="110" x2="165" y2="135" stroke="#333" stroke-width="1.5"/>
+  <polygon points="160,135 165,145 170,135" fill="#333"/>
+
+  <!-- Create Listing -->
+  <rect x="85" y="145" width="160" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="165" y="160" text-anchor="middle" font-size="10" fill="#333">Create New Property</text>
+  <text x="165" y="172" text-anchor="middle" font-size="10" fill="#333">Listing</text>
+
+  <!-- Submit to system -->
+  <line x1="245" y1="163" x2="340" y2="163" stroke="#333" stroke-width="1.5"/>
+  <polygon points="340,158 350,163 340,168" fill="#333"/>
+
+  <rect x="330" y="145" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="160" text-anchor="middle" font-size="10" fill="#333">Validate &amp; Save</text>
+  <text x="410" y="172" text-anchor="middle" font-size="10" fill="#333">Status = "pending"</text>
+
+  <!-- Notify admins -->
+  <line x1="410" y1="181" x2="410" y2="204" stroke="#333" stroke-width="1.5"/>
+  <polygon points="405,204 410,214 415,204" fill="#333"/>
+
+  <rect x="330" y="214" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="229" text-anchor="middle" font-size="10" fill="#333">Notify All Admins</text>
+  <text x="410" y="241" text-anchor="middle" font-size="10" fill="#333">"New Listing Pending"</text>
+
+  <!-- Admin receives -->
+  <line x1="490" y1="232" x2="575" y2="232" stroke="#333" stroke-width="1.5"/>
+  <polygon points="575,227 585,232 575,237" fill="#333"/>
+
+  <rect x="565" y="214" width="170" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="650" y="229" text-anchor="middle" font-size="10" fill="#333">View Pending</text>
+  <text x="650" y="241" text-anchor="middle" font-size="10" fill="#333">Listings Dashboard</text>
+
+  <!-- Review listing -->
+  <line x1="645" y1="250" x2="645" y2="275" stroke="#333" stroke-width="1.5"/>
+  <polygon points="640,275 645,285 650,275" fill="#333"/>
+
+  <rect x="565" y="285" width="170" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="650" y="307" text-anchor="middle" font-size="10" fill="#333">Review Property Details</text>
+
+  <!-- Decision: Approve? -->
+  <line x1="645" y1="321" x2="645" y2="350" stroke="#333" stroke-width="1.5"/>
+  <polygon points="640,350 645,360 650,350" fill="#333"/>
+  <polygon points="645,362 690,387 645,412 600,387" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="645" y="391" text-anchor="middle" font-size="10" fill="#333">Approve?</text>
+
+  <!-- Yes: Approve -->
+  <line x1="645" y1="412" x2="645" y2="440" stroke="#333" stroke-width="1.5"/>
+  <polygon points="640,440 645,450 650,440" fill="#333"/>
+  <text x="660" y="435" font-size="9" fill="#555">[Yes]</text>
+
+  <rect x="565" y="450" width="170" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="650" y="472" text-anchor="middle" font-size="10" fill="#333">Approve → Status = active</text>
+
+  <!-- Update in system -->
+  <line x1="565" y1="468" x2="490" y2="468" stroke="#333" stroke-width="1.5"/>
+  <polygon points="490,463 480,468 490,473" fill="#333"/>
+
+  <rect x="330" y="450" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="465" text-anchor="middle" font-size="10" fill="#333">UPDATE property</text>
+  <text x="410" y="477" text-anchor="middle" font-size="10" fill="#333">SET status='active'</text>
+
+  <!-- Notify owner -->
+  <line x1="410" y1="486" x2="410" y2="510" stroke="#333" stroke-width="1.5"/>
+  <polygon points="405,510 410,520 415,510" fill="#333"/>
+
+  <rect x="330" y="520" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="535" text-anchor="middle" font-size="10" fill="#333">Notify Owner</text>
+  <text x="410" y="547" text-anchor="middle" font-size="10" fill="#333">"Property Approved!"</text>
+
+  <!-- Owner receives toast -->
+  <line x1="330" y1="538" x2="245" y2="538" stroke="#333" stroke-width="1.5"/>
+  <polygon points="245,533 235,538 245,543" fill="#333"/>
+
+  <rect x="85" y="520" width="160" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="165" y="535" text-anchor="middle" font-size="10" fill="#333">🔔 Toast Notification:</text>
+  <text x="165" y="547" text-anchor="middle" font-size="10" fill="#333">"Property Approved!"</text>
+
+  <!-- No: Reject -->
+  <line x1="690" y1="387" x2="730" y2="387" stroke="#333" stroke-width="1.5"/>
+  <text x="700" y="380" font-size="9" fill="#555">[No]</text>
+  <line x1="730" y1="387" x2="730" y2="460" stroke="#333" stroke-width="1.5"/>
+  <line x1="730" y1="460" x2="735" y2="460" stroke="#333" stroke-width="1.5"/>
+
+  <rect x="565" y="500" width="170" height="26" rx="13" fill="#fce4ec" stroke="#c62828" stroke-width="1"/>
+  <text x="650" y="517" text-anchor="middle" font-size="10" fill="#c62828">Reject → Status = rejected</text>
+  <line x1="730" y1="460" x2="730" y2="513" stroke="#333" stroke-width="1"/>
+  <line x1="730" y1="513" x2="735" y2="513" stroke="#333" stroke-width="1"/>
+
+  <!-- ===== Premium Payment Section ===== -->
+  <!-- Decision: Pay for Premium? -->
+  <line x1="165" y1="556" x2="165" y2="590" stroke="#333" stroke-width="1.5"/>
+  <polygon points="160,590 165,600 170,590" fill="#333"/>
+  <polygon points="165,602 210,627 165,652 120,627" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="165" y="625" text-anchor="middle" font-size="9" fill="#333">Go</text>
+  <text x="165" y="637" text-anchor="middle" font-size="9" fill="#333">Premium?</text>
+
+  <!-- Yes: Premium payment -->
+  <line x1="165" y1="652" x2="165" y2="678" stroke="#333" stroke-width="1.5"/>
+  <polygon points="160,678 165,688 170,678" fill="#333"/>
+  <text x="180" y="673" font-size="9" fill="#555">[Yes]</text>
+
+  <rect x="85" y="688" width="160" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="165" y="703" text-anchor="middle" font-size="10" fill="#333">Click "Make Premium"</text>
+  <text x="165" y="715" text-anchor="middle" font-size="10" fill="#333">(Konnect)</text>
+
+  <!-- Send to system -->
+  <line x1="245" y1="706" x2="340" y2="706" stroke="#333" stroke-width="1.5"/>
+  <polygon points="340,701 350,706 340,711" fill="#333"/>
+
+  <rect x="330" y="688" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="710" text-anchor="middle" font-size="10" fill="#333">Create Payment Record</text>
+
+  <!-- Process payment -->
+  <line x1="490" y1="706" x2="790" y2="706" stroke="#333" stroke-width="1.5"/>
+  <polygon points="790,701 800,706 790,711" fill="#333"/>
+
+  <rect x="780" y="688" width="160" height="36" rx="18" fill="#fff" stroke="#e65100" stroke-width="1.5"/>
+  <text x="860" y="703" text-anchor="middle" font-size="10" fill="#333">Process Payment</text>
+  <text x="860" y="715" text-anchor="middle" font-size="10" fill="#333">(Konnect API)</text>
+
+  <!-- Decision: Payment success? -->
+  <line x1="860" y1="724" x2="860" y2="750" stroke="#333" stroke-width="1.5"/>
+  <polygon points="855,750 860,760 865,750" fill="#333"/>
+  <polygon points="860,762 900,787 860,812 820,787" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="860" y="791" text-anchor="middle" font-size="9" fill="#333">Success?</text>
+
+  <!-- Yes: Complete -->
+  <line x1="860" y1="812" x2="860" y2="840" stroke="#333" stroke-width="1.5"/>
+  <polygon points="855,840 860,850 865,840" fill="#333"/>
+  <text x="875" y="835" font-size="9" fill="#555">[Yes]</text>
+
+  <rect x="780" y="850" width="160" height="36" rx="18" fill="#fff" stroke="#e65100" stroke-width="1.5"/>
+  <text x="860" y="865" text-anchor="middle" font-size="10" fill="#333">Return transaction_ref</text>
+  <text x="860" y="877" text-anchor="middle" font-size="10" fill="#333">status = completed</text>
+
+  <!-- Update in system -->
+  <line x1="780" y1="868" x2="490" y2="868" stroke="#333" stroke-width="1.5"/>
+  <polygon points="490,863 480,868 490,873" fill="#333"/>
+
+  <rect x="330" y="850" width="160" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="410" y="865" text-anchor="middle" font-size="10" fill="#333">UPDATE property</text>
+  <text x="410" y="877" text-anchor="middle" font-size="10" fill="#333">SET is_premium = 1</text>
+
+  <!-- Return to owner -->
+  <line x1="330" y1="868" x2="245" y2="868" stroke="#333" stroke-width="1.5"/>
+  <polygon points="245,863 235,868 245,873" fill="#333"/>
+
+  <rect x="85" y="850" width="160" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="165" y="865" text-anchor="middle" font-size="10" fill="#333">✨ Property now</text>
+  <text x="165" y="877" text-anchor="middle" font-size="10" fill="#333">PREMIUM (featured)</text>
+
+  <!-- No payment → skip -->
+  <line x1="120" y1="627" x2="50" y2="627" stroke="#333" stroke-width="1.5"/>
+  <text x="65" y="620" font-size="9" fill="#555">[No]</text>
+  <line x1="50" y1="627" x2="50" y2="950" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Payment failed path -->
+  <line x1="820" y1="787" x2="780" y2="787" stroke="#333" stroke-width="1.5"/>
+  <text x="785" y="780" font-size="9" fill="#555">[No]</text>
+  <rect x="757" y="770" width="20" height="30" rx="0" fill="none" stroke="none"/>
+  <line x1="770" y1="787" x2="770" y2="920" stroke="#333" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="780" y="905" width="130" height="26" rx="13" fill="#fce4ec" stroke="#c62828" stroke-width="1"/>
+  <text x="845" y="922" text-anchor="middle" font-size="10" fill="#c62828">Payment Failed</text>
+
+  <!-- Merge all paths -->
+  <line x1="165" y1="886" x2="165" y2="950" stroke="#333" stroke-width="1.5"/>
+  <line x1="50" y1="950" x2="165" y2="950" stroke="#333" stroke-width="1.5"/>
+  <polygon points="165,940 180,950 165,960 150,950" fill="#333"/>
+
+  <!-- Final state -->
+  <line x1="165" y1="960" x2="165" y2="980" stroke="#333" stroke-width="1.5"/>
+  <polygon points="160,980 165,990 170,980" fill="#333"/>
+
+  <rect x="85" y="990" width="160" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="165" y="1012" text-anchor="middle" font-size="11" fill="#333">Listing Active</text>
+
+  <!-- Final node -->
+  <line x1="165" y1="1026" x2="165" y2="1040" stroke="#333" stroke-width="1.5"/>
+  <circle cx="165" cy="1050" r="10" fill="#fff" stroke="#333" stroke-width="2"/>
+  <circle cx="165" cy="1050" r="6" fill="#333"/>
+
+</svg>
+</div>
+</body>
+</html>

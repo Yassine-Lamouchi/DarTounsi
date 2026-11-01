@@ -1,0 +1,138 @@
+@startuml Sprint3_Sequence
+' ============================================
+' DarTounsi - Sprint 3: AI Matchmaking & Payments
+' Sequence Diagram (UML 2.0)
+' ============================================
+
+skinparam participant {
+  BackgroundColor #E85D04
+  FontColor #FFFFFF
+  BorderColor #C44D03
+}
+skinparam sequence {
+  ArrowColor #333333
+  LifeLineBorderColor #333333
+  LifeLineBackgroundColor #FFE0B2
+}
+
+actor ":User" as User
+participant ":SPA\n(app.js)" as SPA
+participant ":SamsarBot" as Bot #2E7D32
+participant ":API\n(api.php)" as API
+database ":Database" as DB
+actor ":Admin" as Admin #4A90D9
+
+== SamsarBot AI Interaction ==
+
+group sd SamsarBot AI Interaction
+  User -> SPA : 1: click SamsarBot\nfloating button
+  activate SPA
+
+  SPA -> Bot : 2: getContextualSuggestions\n(currentPage)
+  activate Bot
+
+  Bot --> SPA : 3: page-specific\nsuggestions[]
+  deactivate Bot
+
+  SPA --> User : 4: render suggestion\nbuttons
+
+  User -> SPA : 5: sendMessage\n("How do I find roommates?")
+
+  SPA -> Bot : 6: processMessage(input)
+  activate Bot
+
+  Bot -> Bot : 7: matchKeywords()\nscan FAQ database
+
+  Bot --> SPA : 8: matched response\nfrom FAQ DB
+  deactivate Bot
+
+  SPA --> User : 9: display bot response\nin chat bubble
+  deactivate SPA
+end
+
+== Roommate Matching & Compatibility ==
+
+group sd Roommate Matching
+  User -> SPA : 1: navigate(#/matchmaking)
+  activate SPA
+
+  SPA -> API : 2: GET route=matchmaking\n&action=matches
+  activate API
+
+  API -> DB : 3: SELECT match_results\nJOIN users\nJOIN matchmaking_profiles
+  activate DB
+  DB --> API : 4: matches[] with scores\n& breakdown JSON
+  deactivate DB
+
+  API -> API : 5: calculate new scores\nfor unmatched pairs
+
+  API -> DB : 6: INSERT match_results\n(new pairs)
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API --> SPA : 7: {data: matches[]\nwith breakdown JSON}
+  deactivate API
+
+  SPA --> User : 8: render compatibility cards\n(92%, 85%, 78%...)
+
+  User -> SPA : 9: click "View Breakdown"
+  SPA --> User : 10: show criteria breakdown\n(sleep, noise, pets,\ncleanliness, budget...)
+  deactivate SPA
+end
+
+== Admin Property Approval Flow ==
+
+group sd Admin Property Approval
+  Admin -> API : 1: GET route=admin\n&action=properties\n&status=pending
+  activate API
+
+  API -> DB : 2: SELECT properties\nWHERE status='pending'
+  activate DB
+  DB --> API : 3: pending properties[]
+  deactivate DB
+
+  API --> Admin : 4: render pending\nlistings for review
+  deactivate API
+
+  Admin -> API : 5: POST route=admin\n&action=approve-property\n&id=X&status=active
+  activate API
+
+  API -> DB : 6: UPDATE properties\nSET status='active'\nWHERE id=X
+  activate DB
+  DB --> API : 7: success
+  deactivate DB
+
+  API -> DB : 8: INSERT notification\n(owner_id, "Property Approved")
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API --> Admin : 9: {message:\n"Property status: active"}
+  deactivate API
+
+  API -> User : 10: toast notification:\n"Your property has been\napproved! 🎉"
+end
+
+== Notification Polling ==
+
+loop every 30 seconds
+  SPA -> SPA : pollNotifications()
+  activate SPA
+
+  SPA -> API : 1: GET route=notifications\n&action=count
+  activate API
+
+  API -> DB : 2: SELECT COUNT(*)\nWHERE user_id=?\nAND is_read=0
+  activate DB
+  DB --> API : 3: count
+  deactivate DB
+
+  API --> SPA : 4: {count: N}
+  deactivate API
+
+  SPA --> User : 5: update badge counter\n+ show toast if new
+  deactivate SPA
+end
+
+@enduml

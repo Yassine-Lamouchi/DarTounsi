@@ -1,0 +1,136 @@
+@startuml Global_UseCase
+' ============================================
+' DarTounsi - Global System
+' Use Case Diagram — Complete Platform (UML 2.0)
+' ============================================
+
+left to right direction
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  ArrowColor #333333
+}
+
+rectangle "DarTounsi — Web Platform for Real Estate Rental & Co-living" as System #FEFAF0 {
+
+  ' ===== Sprint 1 — Identity & Trust =====
+  package "Sprint 1 — Identity & Trust" as S1 #FFE0B2 {
+    usecase "Register\n(Email / Google)" as UC_REG
+    usecase "Select Role" as UC_ROLE
+    usecase "Login" as UC_LOGIN
+    usecase "View Bento\nDashboard" as UC_DASH
+    usecase "Complete Lifestyle\nQuestionnaire" as UC_QUEST
+    usecase "View Verification\nBadges" as UC_VERIF
+    usecase "Manage\nProfile" as UC_PROFILE
+  }
+
+  ' ===== Sprint 2 — Intelligent Discovery =====
+  package "Sprint 2 — Intelligent Discovery" as S2 #BBDEFB {
+    usecase "Browse Properties\n(Map)" as UC_MAP
+    usecase "Search Near\nUniversity" as UC_UNI
+    usecase "Filter by\nPreferences" as UC_FILTER
+    usecase "View Animated\nProperty Cards" as UC_CARDS
+    usecase "Contact via\nWhatsApp" as UC_WA
+    usecase "Submit Review\n& Rating" as UC_REVIEW
+    usecase "Toggle\nFavorites" as UC_FAV
+    usecase "Send Rental\nRequest" as UC_RENT
+    usecase "Send\nMessages" as UC_MSG
+  }
+
+  ' ===== Sprint 3 — AI & Payments =====
+  package "Sprint 3 — AI Matchmaking & Payments" as S3 #C8E6C9 {
+    usecase "Interact with\nSamsarBot" as UC_BOT
+    usecase "View Roommate\nCompatibility" as UC_MATCH
+    usecase "View Match\nBreakdown" as UC_BREAK
+    usecase "View Area\nSafety" as UC_SAFETY
+    usecase "Pay Premium\n(Konnect)" as UC_PAY
+    usecase "Create Property\nListing" as UC_CREATE
+    usecase "Accept/Reject\nTenants" as UC_ACCEPT
+    usecase "View Multi-Currency\nPrices" as UC_CURR
+    usecase "Receive\nNotifications" as UC_NOTIF
+  }
+
+  ' ===== Admin Management =====
+  package "Admin Management" as ADM #FFCDD2 {
+    usecase "Approve/Reject\nListings" as UC_APPROVE
+    usecase "Manage\nUsers" as UC_USERS
+    usecase "Verify User\nAccount" as UC_VERIFY
+    usecase "Resolve\nReports" as UC_REPORTS
+    usecase "View Admin\nDashboard" as UC_STATS
+  }
+}
+
+' ===== Actors =====
+actor "Visitor" as Visitor
+actor "Tenant" as Tenant
+actor "Student" as Student
+actor "Owner" as Owner
+actor "Hotel Manager" as Hotel
+actor "Admin" as Admin
+actor "Super Admin" as SuperAdmin
+
+actor "Google API" <<external>> as Google
+actor "Konnect API" <<external>> as Konnect
+actor "SamsarBot AI" <<system>> as SamsarBot
+
+' ===== Generalizations =====
+Tenant -u-|> Visitor
+Owner -u-|> Visitor
+Student -u-|> Tenant
+Hotel -u-|> Owner
+SuperAdmin -u-|> Admin
+
+' ===== Visitor =====
+Visitor --> UC_REG
+Visitor --> UC_LOGIN
+
+' ===== Tenant =====
+Tenant --> UC_DASH
+Tenant --> UC_QUEST
+Tenant --> UC_PROFILE
+Tenant --> UC_MAP
+Tenant --> UC_UNI
+Tenant --> UC_FILTER
+Tenant --> UC_CARDS
+Tenant --> UC_WA
+Tenant --> UC_REVIEW
+Tenant --> UC_FAV
+Tenant --> UC_RENT
+Tenant --> UC_MSG
+Tenant --> UC_BOT
+Tenant --> UC_MATCH
+Tenant --> UC_SAFETY
+
+' ===== Owner =====
+Owner --> UC_DASH
+Owner --> UC_PROFILE
+Owner --> UC_CREATE
+Owner --> UC_PAY
+Owner --> UC_ACCEPT
+
+' ===== Admin =====
+Admin --> UC_APPROVE
+Admin --> UC_USERS
+Admin --> UC_VERIFY
+Admin --> UC_REPORTS
+Admin --> UC_STATS
+
+' ===== User (generic) =====
+Tenant --> UC_CURR
+Tenant --> UC_NOTIF
+
+' ===== External =====
+Google --> UC_REG
+Konnect --> UC_PAY
+SamsarBot --> UC_BOT
+
+' ===== Key Relationships =====
+UC_REG ..> UC_ROLE : <<include>>
+UC_LOGIN ..> UC_DASH : <<include>>
+UC_MAP ..> UC_CARDS : <<include>>
+UC_FILTER ..> UC_CARDS : <<include>>
+UC_MATCH ..> UC_BREAK : <<include>>
+
+@enduml

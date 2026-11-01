@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 2: Class Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 2: Intelligent Discovery</h1>
+<h2>Class Diagram (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 850" width="1250" height="850">
+  <defs>
+    <marker id="diamond-filled" markerWidth="14" markerHeight="10" refX="14" refY="5" orient="auto">
+      <polygon points="0 5, 7 0, 14 5, 7 10" fill="#333" stroke="#333" stroke-width="1"/>
+    </marker>
+    <marker id="diamond-open" markerWidth="14" markerHeight="10" refX="14" refY="5" orient="auto">
+      <polygon points="0 5, 7 0, 14 5, 7 10" fill="#fff" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="arrow-assoc" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polyline points="0 0, 10 3.5, 0 7" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Property Class (central) ===== -->
+  <rect x="80" y="30" width="340" height="380" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="80" y="30" width="340" height="35" rx="4" fill="#e85d04"/>
+  <text x="250" y="53" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Property</text>
+  <line x1="80" y1="65" x2="420" y2="65" stroke="#e85d04" stroke-width="1"/>
+  <text x="90" y="83" font-size="11" fill="#333">- id : int</text>
+  <text x="90" y="98" font-size="11" fill="#333">- owner_id : int</text>
+  <text x="90" y="113" font-size="11" fill="#333">- title : string</text>
+  <text x="90" y="128" font-size="11" fill="#333">- description : text</text>
+  <text x="90" y="143" font-size="11" fill="#333">- type : «enum» PropertyType</text>
+  <text x="90" y="158" font-size="11" fill="#333">- price : decimal</text>
+  <text x="90" y="173" font-size="11" fill="#333">- currency : string {default: 'TND'}</text>
+  <text x="90" y="188" font-size="11" fill="#333">- city : string</text>
+  <text x="90" y="203" font-size="11" fill="#333">- neighborhood : string</text>
+  <text x="90" y="218" font-size="11" fill="#333">- address : string</text>
+  <text x="90" y="233" font-size="11" fill="#333">- lat : decimal(10,7)</text>
+  <text x="90" y="248" font-size="11" fill="#333">- lng : decimal(10,7)</text>
+  <text x="90" y="263" font-size="11" fill="#333">- bedrooms : int</text>
+  <text x="90" y="278" font-size="11" fill="#333">- bathrooms : int</text>
+  <text x="90" y="293" font-size="11" fill="#333">- area_sqm : int</text>
+  <text x="90" y="308" font-size="11" fill="#333">- amenities : JSON</text>
+  <text x="90" y="323" font-size="11" fill="#333">- images : JSON</text>
+  <text x="90" y="338" font-size="11" fill="#333">- is_furnished : boolean</text>
+  <text x="90" y="353" font-size="11" fill="#333">- is_premium : boolean</text>
+  <text x="90" y="368" font-size="11" fill="#333">- status : «enum» PropertyStatus</text>
+  <text x="90" y="383" font-size="11" fill="#333">- views_count : int</text>
+  <line x1="80" y1="390" x2="420" y2="390" stroke="#e85d04" stroke-width="1"/>
+  <text x="90" y="405" font-size="11" fill="#333">+ list(filters) : Property[]</text>
+
+  <!-- ===== Review Class ===== -->
+  <rect x="500" y="30" width="280" height="190" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="500" y="30" width="280" height="35" rx="4" fill="#e85d04"/>
+  <text x="640" y="53" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Review</text>
+  <line x1="500" y1="65" x2="780" y2="65" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="83" font-size="11" fill="#333">- id : int</text>
+  <text x="510" y="98" font-size="11" fill="#333">- user_id : int</text>
+  <text x="510" y="113" font-size="11" fill="#333">- property_id : int</text>
+  <text x="510" y="128" font-size="11" fill="#333">- rating : int {1..5}</text>
+  <text x="510" y="143" font-size="11" fill="#333">- comment : text</text>
+  <text x="510" y="158" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="500" y1="165" x2="780" y2="165" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="183" font-size="11" fill="#333">+ create(userId, propId, rating, comment) : void</text>
+  <text x="510" y="198" font-size="11" fill="#333">+ listByProperty(propId) : Review[]</text>
+  <text x="510" y="213" font-size="11" fill="#333">+ getAvgRating(propId) : float</text>
+
+  <!-- ===== Favorite Class ===== -->
+  <rect x="500" y="260" width="280" height="160" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="500" y="260" width="280" height="35" rx="4" fill="#e85d04"/>
+  <text x="640" y="283" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Favorite</text>
+  <line x1="500" y1="295" x2="780" y2="295" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="313" font-size="11" fill="#333">- id : int</text>
+  <text x="510" y="328" font-size="11" fill="#333">- user_id : int</text>
+  <text x="510" y="343" font-size="11" fill="#333">- property_id : int</text>
+  <text x="510" y="358" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="500" y1="365" x2="780" y2="365" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="383" font-size="11" fill="#333">+ toggle(userId, propId) : boolean</text>
+  <text x="510" y="398" font-size="11" fill="#333">+ listByUser(userId) : Property[]</text>
+
+  <!-- ===== RentalRequest Class ===== -->
+  <rect x="500" y="460" width="280" height="210" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="500" y="460" width="280" height="35" rx="4" fill="#e85d04"/>
+  <text x="640" y="483" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">RentalRequest</text>
+  <line x1="500" y1="495" x2="780" y2="495" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="513" font-size="11" fill="#333">- id : int</text>
+  <text x="510" y="528" font-size="11" fill="#333">- tenant_id : int</text>
+  <text x="510" y="543" font-size="11" fill="#333">- property_id : int</text>
+  <text x="510" y="558" font-size="11" fill="#333">- owner_id : int</text>
+  <text x="510" y="573" font-size="11" fill="#333">- status : «enum» {pending|accepted|rejected}</text>
+  <text x="510" y="588" font-size="11" fill="#333">- message : text</text>
+  <text x="510" y="603" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="500" y1="612" x2="780" y2="612" stroke="#e85d04" stroke-width="1"/>
+  <text x="510" y="630" font-size="11" fill="#333">+ request(tenantId, propId, msg) : void</text>
+  <text x="510" y="645" font-size="11" fill="#333">+ accept(reqId) : void</text>
+  <text x="510" y="660" font-size="11" fill="#333">+ reject(reqId) : void</text>
+
+  <!-- ===== Message Class ===== -->
+  <rect x="860" y="30" width="300" height="210" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="860" y="30" width="300" height="35" rx="4" fill="#e85d04"/>
+  <text x="1010" y="53" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Message</text>
+  <line x1="860" y1="65" x2="1160" y2="65" stroke="#e85d04" stroke-width="1"/>
+  <text x="870" y="83" font-size="11" fill="#333">- id : int</text>
+  <text x="870" y="98" font-size="11" fill="#333">- sender_id : int</text>
+  <text x="870" y="113" font-size="11" fill="#333">- receiver_id : int</text>
+  <text x="870" y="128" font-size="11" fill="#333">- property_id : int {nullable}</text>
+  <text x="870" y="143" font-size="11" fill="#333">- content : text</text>
+  <text x="870" y="158" font-size="11" fill="#333">- is_read : boolean</text>
+  <text x="870" y="173" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="860" y1="183" x2="1160" y2="183" stroke="#e85d04" stroke-width="1"/>
+  <text x="870" y="201" font-size="11" fill="#333">+ send(senderId, receiverId, content) : void</text>
+  <text x="870" y="216" font-size="11" fill="#333">+ getThread(userId, otherId) : Message[]</text>
+  <text x="870" y="231" font-size="11" fill="#333">+ getConversations(userId) : Conversation[]</text>
+
+  <!-- ===== User (simplified reference) ===== -->
+  <rect x="860" y="310" width="300" height="140" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="860" y="310" width="300" height="35" rx="4" fill="#e85d04"/>
+  <text x="1010" y="333" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">User</text>
+  <line x1="860" y1="345" x2="1160" y2="345" stroke="#e85d04" stroke-width="1"/>
+  <text x="870" y="363" font-size="11" fill="#333">- id : int</text>
+  <text x="870" y="378" font-size="11" fill="#333">- name : string</text>
+  <text x="870" y="393" font-size="11" fill="#333">- phone : string</text>
+  <text x="870" y="408" font-size="11" fill="#333">- is_verified : boolean</text>
+  <line x1="860" y1="418" x2="1160" y2="418" stroke="#e85d04" stroke-width="1"/>
+  <text x="870" y="436" font-size="11" fill="#333">+ getWhatsAppLink() : string</text>
+
+  <!-- ===== PropertyType Enum ===== -->
+  <rect x="80" y="460" width="200" height="140" rx="4" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.5"/>
+  <rect x="80" y="460" width="200" height="30" rx="4" fill="#4a90d9"/>
+  <text x="180" y="480" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">«enum» PropertyType</text>
+  <line x1="80" y1="490" x2="280" y2="490" stroke="#4a90d9" stroke-width="1"/>
+  <text x="90" y="508" font-size="11" fill="#333">apartment</text>
+  <text x="90" y="523" font-size="11" fill="#333">house</text>
+  <text x="90" y="538" font-size="11" fill="#333">studio</text>
+  <text x="90" y="553" font-size="11" fill="#333">room</text>
+  <text x="90" y="568" font-size="11" fill="#333">hotel_room</text>
+
+  <!-- ===== PropertyStatus Enum ===== -->
+  <rect x="80" y="640" width="200" height="120" rx="4" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.5"/>
+  <rect x="80" y="640" width="200" height="30" rx="4" fill="#4a90d9"/>
+  <text x="180" y="660" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">«enum» PropertyStatus</text>
+  <line x1="80" y1="670" x2="280" y2="670" stroke="#4a90d9" stroke-width="1"/>
+  <text x="90" y="688" font-size="11" fill="#333">pending</text>
+  <text x="90" y="703" font-size="11" fill="#333">active</text>
+  <text x="90" y="718" font-size="11" fill="#333">rejected</text>
+  <text x="90" y="733" font-size="11" fill="#333">rented</text>
+  <text x="90" y="748" font-size="11" fill="#333">archived</text>
+
+  <!-- ===== Relationships ===== -->
+  <!-- Property 1--* Review -->
+  <line x1="420" y1="100" x2="500" y2="100" stroke="#333" stroke-width="1.5" marker-start="url(#diamond-filled)"/>
+  <text x="422" y="92" font-size="10" fill="#555">1</text>
+  <text x="488" y="92" font-size="10" fill="#555">*</text>
+
+  <!-- Property 1--* Favorite -->
+  <line x1="420" y1="330" x2="500" y2="330" stroke="#333" stroke-width="1.5" marker-start="url(#diamond-filled)"/>
+  <text x="422" y="322" font-size="10" fill="#555">1</text>
+  <text x="488" y="322" font-size="10" fill="#555">*</text>
+
+  <!-- Property 1--* RentalRequest -->
+  <line x1="420" y1="380" x2="440" y2="380" stroke="#333" stroke-width="1.5"/>
+  <line x1="440" y1="380" x2="440" y2="540" stroke="#333" stroke-width="1.5"/>
+  <line x1="440" y1="540" x2="500" y2="540" stroke="#333" stroke-width="1.5" marker-start="url(#diamond-filled)"/>
+  <text x="445" y="400" font-size="10" fill="#555">1</text>
+  <text x="488" y="534" font-size="10" fill="#555">*</text>
+
+  <!-- Property 0..1--* Message -->
+  <line x1="420" y1="200" x2="440" y2="200" stroke="#333" stroke-width="1.5"/>
+  <line x1="440" y1="200" x2="440" y2="140" stroke="#333" stroke-width="1.5"/>
+  <line x1="440" y1="140" x2="860" y2="140" stroke="#333" stroke-width="1.5"/>
+  <text x="430" y="135" font-size="10" fill="#555">0..1</text>
+  <text x="845" y="135" font-size="10" fill="#555">*</text>
+
+  <!-- User 1--* Review -->
+  <line x1="860" y1="380" x2="780" y2="160" stroke="#333" stroke-width="1.5"/>
+  <text x="845" y="373" font-size="10" fill="#555">1</text>
+  <text x="790" y="165" font-size="10" fill="#555">*</text>
+  <text x="830" y="270" font-size="10" fill="#555" font-style="italic">writes</text>
+
+  <!-- User 1--* Favorite -->
+  <line x1="860" y1="395" x2="780" y2="340" stroke="#333" stroke-width="1.5"/>
+  <text x="850" y="390" font-size="10" fill="#555">1</text>
+  <text x="790" y="338" font-size="10" fill="#555">*</text>
+
+  <!-- User 1--* Message (sender) -->
+  <line x1="1010" y1="310" x2="1010" y2="240" stroke="#333" stroke-width="1.5"/>
+  <text x="1018" y="275" font-size="10" fill="#555">sender/receiver</text>
+  <text x="1018" y="250" font-size="10" fill="#555">1</text>
+  <text x="1018" y="300" font-size="10" fill="#555">*</text>
+
+  <!-- User owns Property -->
+  <line x1="860" y1="420" x2="830" y2="420" stroke="#333" stroke-width="1.5"/>
+  <line x1="830" y1="420" x2="830" y2="800" stroke="#333" stroke-width="1.5"/>
+  <line x1="830" y1="800" x2="380" y2="800" stroke="#333" stroke-width="1.5"/>
+  <line x1="380" y1="800" x2="380" y2="410" stroke="#333" stroke-width="1.5"/>
+  <line x1="380" y1="410" x2="420" y2="410" stroke="#333" stroke-width="1.5"/>
+  <text x="850" y="440" font-size="10" fill="#555">1</text>
+  <text x="390" y="435" font-size="10" fill="#555">*</text>
+  <text x="600" y="795" font-size="10" fill="#555" font-style="italic">owns ▶</text>
+
+</svg>
+</div>
+</body>
+</html>

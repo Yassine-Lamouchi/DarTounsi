@@ -1,0 +1,315 @@
+@startuml Global_Class
+' ============================================
+' DarTounsi - Global System
+' Class Diagram — Complete Data Model (UML 2.0)
+' ============================================
+
+skinparam class {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  HeaderBackgroundColor #E85D04
+  FontColor #333333
+  ArrowColor #333333
+}
+skinparam stereotypeCBackgroundColor #F0FFF0
+
+' ===================================================================
+' CORE ENTITIES
+' ===================================================================
+
+class User {
+  - id : int <<PK>>
+  - name : varchar(100)
+  - email : varchar(150) <<unique>>
+  - password_hash : varchar(255)
+  - avatar_url : varchar(500)
+  - banner_url : varchar(500)
+  - description : text
+  - location : varchar(200)
+  - role : UserRole
+  - google_id : varchar(100)
+  - phone : varchar(20)
+  - is_verified : boolean
+  - lifestyle_prefs : JSON
+  - created_at : datetime
+  - updated_at : datetime
+  __
+  + register(name, email, pwd, role) : User
+  + login(email, password) : User
+  + updateProfile(fields) : void
+  + isSuperAdmin() : boolean
+  + isAdminOrSuper() : boolean
+}
+
+class Property {
+  - id : int <<PK>>
+  - owner_id : int <<FK → User>>
+  - title : varchar(200)
+  - description : text
+  - type : PropertyType
+  - price : decimal(10,2)
+  - currency : varchar(3) = 'TND'
+  - city : varchar(50)
+  - neighborhood : varchar(100)
+  - address : varchar(255)
+  - lat : decimal(10,7)
+  - lng : decimal(10,7)
+  - bedrooms : int
+  - bathrooms : int
+  - area_sqm : int
+  - amenities : JSON
+  - images : JSON
+  - is_furnished : boolean
+  - is_premium : boolean
+  - status : PropertyStatus
+  - views_count : int
+  - created_at : datetime
+  __
+  + list(filters) : Property[]
+  + get(id) : Property
+  + create() / update() / delete()
+  + getMyProperties() : Property[]
+  + getFeatured() : Property[]
+  + makePremium() : void
+}
+
+' ===================================================================
+' SPRINT 2 ENTITIES
+' ===================================================================
+
+class RentalRequest {
+  - id : int <<PK>>
+  - tenant_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - owner_id : int <<FK → User>>
+  - status : enum {pending, accepted, rejected}
+  - message : text
+  - created_at : datetime
+  __
+  + request() / accept() / reject()
+  + myRequests() / incoming()
+}
+
+class Review {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - rating : int {1..5}
+  - comment : text
+  - created_at : datetime
+  __
+  + create() / listByProperty()
+  + getAvgRating(propId) : float
+}
+
+class Favorite {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - created_at : datetime
+  __
+  + toggle() / listByUser()
+  ..
+  <<constraint>> UNIQUE(user_id, property_id)
+}
+
+class Message {
+  - id : int <<PK>>
+  - sender_id : int <<FK → User>>
+  - receiver_id : int <<FK → User>>
+  - property_id : int <<FK>> {nullable}
+  - content : text
+  - is_read : boolean = false
+  - created_at : datetime
+  __
+  + send() / getThread()
+  + getConversations(userId)
+}
+
+' ===================================================================
+' SPRINT 1 ENTITY
+' ===================================================================
+
+class MatchmakingProfile {
+  - id : int <<PK>>
+  - user_id : int <<FK, unique>>
+  - sleep_schedule : enum
+  - noise_level : enum
+  - is_smoker : boolean
+  - pets_allowed : boolean
+  - cleanliness : enum
+  - guest_policy : enum
+  - budget_min : decimal(10,2)
+  - budget_max : decimal(10,2)
+  - preferred_city : varchar(50)
+  - preferred_neighborhood : varchar(100)
+  - bio : text
+  __
+  + save(data) / getProfile(userId)
+  + calculateCompatibility(other) : float
+}
+
+' ===================================================================
+' SPRINT 3 ENTITIES
+' ===================================================================
+
+class MatchResult {
+  - id : int <<PK>>
+  - user_a_id : int <<FK → User>>
+  - user_b_id : int <<FK → User>>
+  - compatibility_score : decimal(5,2)
+  - score_breakdown : JSON
+  - created_at : datetime
+  __
+  + getMatches(userId) : MatchResult[]
+  + calculateScore(pA, pB) : float
+}
+
+class Notification {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - type : varchar(50)
+  - title : varchar(200)
+  - message : text
+  - link : varchar(255)
+  - is_read : boolean = false
+  - created_at : datetime
+  __
+  + notify() / markRead()
+  + markAllRead() / count()
+}
+
+class Payment {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - amount : decimal(10,2)
+  - currency : varchar(3)
+  - payment_method : varchar(50)
+  - status : enum {pending, completed, failed}
+  - transaction_ref : varchar(100)
+  - created_at : datetime
+  __
+  + createPayment() / completePayment()
+}
+
+class Report {
+  - id : int <<PK>>
+  - reporter_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - reason : varchar(100)
+  - details : text
+  - status : enum {pending, reviewed, resolved}
+  - created_at : datetime
+  __
+  + create() / resolve() / listPending()
+}
+
+class AreaSafety {
+  - id : int <<PK>>
+  - city : varchar(50)
+  - neighborhood : varchar(100)
+  - safety_score : int {1..100}
+  - description : text
+  - stats : JSON
+  __
+  + getSafety(city, neighborhood)
+  + getScoreColor(score) : string
+}
+
+' ===================================================================
+' CONTROLLERS
+' ===================================================================
+
+class AuthController <<controller>> #F0FFF0 {
+  + authLogin() / authRegister()
+  + authGoogle() / authSession()
+  + authLogout()
+  + auth() : int
+  + requireRole(roles[]) : int
+}
+
+class AdminController <<controller>> #F0FFF0 {
+  + getStats() : AdminStats
+  + listUsers() / listProperties()
+  + verifyUser() / deleteUser()
+  + approveProperty() / deleteProperty()
+  + getReports() / resolveReport()
+  + isSuperAdmin() / requireRole()
+}
+
+class SamsarBot <<controller>> #F0FFF0 {
+  - faqDatabase : Map<keyword, response>
+  + processMessage(input) : string
+  + getContextualSuggestions(page)
+  + generateDescription(prop) : string
+  + matchKeywords(input) : Response
+}
+
+' ===================================================================
+' ENUMERATIONS
+' ===================================================================
+
+enum UserRole {
+  tenant
+  owner
+  hotel_manager
+  admin
+  super_admin
+}
+
+enum PropertyType {
+  apartment
+  house
+  studio
+  room
+  hotel_room
+}
+
+enum PropertyStatus {
+  pending
+  active
+  rejected
+  rented
+  archived
+}
+
+' ===================================================================
+' RELATIONSHIPS
+' ===================================================================
+
+' --- Core composition ---
+User "1" *-r- "0..*" Property : owns >
+User "1" *-d- "0..1" MatchmakingProfile
+User "1" *-- "0..*" Notification
+
+' --- Sprint 2 relationships ---
+Property "1" *-- "0..*" RentalRequest
+Property "1" *-- "0..*" Review
+Property "1" *-- "0..*" Favorite
+Property "0..1" -- "0..*" Message
+User "1" -- "0..*" Review : writes >
+User "1" -- "0..*" Favorite
+User "1" -- "0..*" Message : sender/receiver
+
+' --- Sprint 3 relationships ---
+User "2" -- "0..*" MatchResult : matched_users
+User "1" *-- "0..*" Payment
+User "1" -- "0..*" Report : reports >
+Property "1" -- "0..*" Report
+Property "1" -- "0..*" Payment
+Property "0..*" -- "0..1" AreaSafety : located_in >
+
+' --- Enum dependencies ---
+User ..> UserRole
+Property ..> PropertyType
+Property ..> PropertyStatus
+
+' --- Controller dependencies ---
+AuthController ..> User : <<use>>
+AdminController ..> User : <<use>>
+AdminController ..> Property : <<use>>
+AdminController ..> Report : <<use>>
+SamsarBot ..> Property : <<use>>
+
+@enduml

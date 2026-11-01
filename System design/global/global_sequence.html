@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Global: Sequence Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Global System</h1>
+<h2>Sequence Diagram — Complete User Journey (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1250" width="1200" height="1250">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-return" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polyline points="0 0, 10 3.5, 0 7" fill="none" stroke="#333" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- Lifelines -->
+  <rect x="20" y="25" width="90" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="65" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:Visitor</text>
+  <line x1="65" y1="60" x2="65" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="160" y="25" width="110" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="215" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:SPA (app.js)</text>
+  <line x1="215" y1="60" x2="215" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="340" y="25" width="110" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="395" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:API (api.php)</text>
+  <line x1="395" y1="60" x2="395" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="520" y="25" width="90" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="565" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:Database</text>
+  <line x1="565" y1="60" x2="565" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="680" y="25" width="100" height="35" rx="4" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="730" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:SamsarBot</text>
+  <line x1="730" y1="60" x2="730" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="850" y="25" width="90" height="35" rx="4" fill="#4a90d9" stroke="#357abd" stroke-width="1.5"/>
+  <text x="895" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:Owner</text>
+  <line x1="895" y1="60" x2="895" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="1010" y="25" width="90" height="35" rx="4" fill="#c62828" stroke="#b71c1c" stroke-width="1.5"/>
+  <text x="1055" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">:Admin</text>
+  <line x1="1055" y1="60" x2="1055" y2="1230" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ===== Phase 1: Registration (Sprint 1) ===== -->
+  <rect x="10" y="75" width="640" height="155" rx="5" fill="none" stroke="#e85d04" stroke-width="1.5"/>
+  <rect x="10" y="75" width="130" height="20" fill="#e85d04" rx="3"/>
+  <text x="75" y="89" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Sprint 1: Identity</text>
+
+  <rect x="60" y="100" width="10" height="120" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="210" y="105" width="10" height="110" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="390" y="115" width="10" height="60" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="120" width="10" height="40" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="70" y1="110" x2="210" y2="110" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="85" y="106" font-size="9" fill="#333">1: register(name, email, pwd, role)</text>
+
+  <line x1="220" y1="120" x2="390" y2="120" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="116" font-size="9" fill="#333">2: POST auth&amp;action=register</text>
+
+  <line x1="400" y1="130" x2="560" y2="130" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="126" font-size="9" fill="#333">3: INSERT user + session</text>
+
+  <line x1="560" y1="150" x2="400" y2="150" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="440" y="147" font-size="9" fill="#555">4: user record</text>
+
+  <line x1="390" y1="170" x2="220" y2="170" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="240" y="167" font-size="9" fill="#555">5: {user, "Registration successful"}</text>
+
+  <line x1="210" y1="195" x2="70" y2="195" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="85" y="192" font-size="9" fill="#555">6: navigate → Dashboard</text>
+
+  <!-- Questionnaire -->
+  <line x1="70" y1="210" x2="210" y2="210" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="85" y="207" font-size="9" fill="#333">7: fillQuestionnaire(lifestyle prefs)</text>
+
+  <!-- ===== Phase 2: Discovery (Sprint 2) ===== -->
+  <rect x="10" y="245" width="640" height="260" rx="5" fill="none" stroke="#4a90d9" stroke-width="1.5"/>
+  <rect x="10" y="245" width="140" height="20" fill="#4a90d9" rx="3"/>
+  <text x="80" y="259" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Sprint 2: Discovery</text>
+
+  <rect x="60" y="275" width="10" height="215" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="210" y="280" width="10" height="205" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="390" y="295" width="10" height="100" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="300" width="10" height="60" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="70" y1="285" x2="210" y2="285" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="281" font-size="9" fill="#333">1: search(city, type, price, furnished)</text>
+
+  <line x1="220" y1="300" x2="390" y2="300" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="296" font-size="9" fill="#333">2: GET properties&amp;action=list&amp;filters</text>
+
+  <line x1="400" y1="310" x2="560" y2="310" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="306" font-size="9" fill="#333">3: SELECT * JOIN users WHERE filters</text>
+
+  <line x1="560" y1="340" x2="400" y2="340" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="430" y="337" font-size="9" fill="#555">4: properties[] + pagination</text>
+
+  <line x1="390" y1="360" x2="220" y2="360" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="240" y="357" font-size="9" fill="#555">5: render animated property cards</text>
+
+  <line x1="210" y1="380" x2="70" y2="380" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="80" y="377" font-size="9" fill="#555">6: display 3D card grid</text>
+
+  <!-- Click property + details -->
+  <line x1="70" y1="400" x2="210" y2="400" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="397" font-size="9" fill="#333">7: clickProperty(id)</text>
+
+  <!-- Rental request -->
+  <rect x="390" y="405" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="410" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="220" y1="410" x2="390" y2="410" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="406" font-size="9" fill="#333">8: GET properties&amp;action=get&amp;id=X</text>
+
+  <line x1="400" y1="420" x2="560" y2="420" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="416" font-size="9" fill="#333">9: SELECT prop + reviews + safety + similar</text>
+
+  <line x1="560" y1="435" x2="400" y2="435" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+
+  <line x1="390" y1="450" x2="220" y2="450" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="240" y="447" font-size="9" fill="#555">10: full property detail page</text>
+
+  <!-- Send rental request -->
+  <line x1="70" y1="465" x2="210" y2="465" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="462" font-size="9" fill="#333">11: requestToRent(propId, message)</text>
+
+  <rect x="390" y="470" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="890" y="485" width="10" height="15" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <line x1="220" y1="475" x2="390" y2="475" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="471" font-size="9" fill="#333">12: POST rentals&amp;action=request</text>
+
+  <line x1="400" y1="490" x2="890" y2="490" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="580" y="487" font-size="9" fill="#333">13: notify(owner, "New Rental Request")</text>
+
+  <!-- ===== Phase 3: AI & Matching (Sprint 3) ===== -->
+  <rect x="10" y="520" width="780" height="220" rx="5" fill="none" stroke="#2e7d32" stroke-width="1.5"/>
+  <rect x="10" y="520" width="170" height="20" fill="#2e7d32" rx="3"/>
+  <text x="95" y="534" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Sprint 3: AI &amp; Matching</text>
+
+  <!-- SamsarBot interaction -->
+  <rect x="60" y="550" width="10" height="170" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="210" y="555" width="10" height="160" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="725" y="565" width="10" height="65" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+
+  <line x1="70" y1="560" x2="210" y2="560" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="85" y="556" font-size="9" fill="#333">1: openSamsarBot()</text>
+
+  <line x1="220" y1="570" x2="725" y2="570" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="400" y="567" font-size="9" fill="#333">2: getContextualSuggestions(currentPage)</text>
+
+  <line x1="725" y1="590" x2="220" y2="590" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="400" y="587" font-size="9" fill="#555">3: page-specific suggestions (keyword FAQ)</text>
+
+  <line x1="70" y1="610" x2="210" y2="610" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="607" font-size="9" fill="#333">4: ask("How do I find roommates?")</text>
+
+  <line x1="220" y1="620" x2="725" y2="620" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="400" y="617" font-size="9" fill="#333">5: processMessage(input) → matchKeywords()</text>
+
+  <line x1="725" y1="625" x2="220" y2="625" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="400" y="637" font-size="9" fill="#555">6: matched FAQ response</text>
+
+  <!-- Matchmaking -->
+  <rect x="390" y="655" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="660" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="70" y1="660" x2="210" y2="660" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="657" font-size="9" fill="#333">7: navigate(#/matchmaking)</text>
+
+  <line x1="220" y1="665" x2="390" y2="665" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="661" font-size="9" fill="#333">8: GET matchmaking&amp;action=matches</text>
+
+  <line x1="400" y1="670" x2="560" y2="670" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="667" font-size="9" fill="#333">9: SELECT match_results JOIN users</text>
+
+  <line x1="560" y1="685" x2="400" y2="685" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="420" y="682" font-size="9" fill="#555">10: matches[] w/ compatibility scores</text>
+
+  <line x1="390" y1="700" x2="220" y2="700" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="240" y="697" font-size="9" fill="#555">11: render compatibility cards (92%, 85%...)</text>
+
+  <line x1="210" y1="710" x2="70" y2="710" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="80" y="707" font-size="9" fill="#555">12: view score breakdown</text>
+
+  <!-- ===== Phase 4: Owner creates listing + Admin approves ===== -->
+  <rect x="10" y="755" width="1090" height="270" rx="5" fill="none" stroke="#c62828" stroke-width="1.5"/>
+  <rect x="10" y="755" width="200" height="20" fill="#c62828" rx="3"/>
+  <text x="110" y="769" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Cross-Sprint: Listing Lifecycle</text>
+
+  <rect x="890" y="785" width="10" height="220" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <rect x="1050" y="870" width="10" height="115" fill="#bbdefb" stroke="#4a90d9" stroke-width="1"/>
+
+  <!-- Owner creates listing -->
+  <line x1="900" y1="790" x2="400" y2="790" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="550" y="787" font-size="9" fill="#333">1: POST properties&amp;action=create (title, type, price, city)</text>
+
+  <rect x="390" y="790" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="795" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="400" y1="800" x2="560" y2="800" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="797" font-size="9" fill="#333">2: INSERT property (status='pending')</text>
+
+  <line x1="560" y1="820" x2="400" y2="820" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+
+  <!-- Notify admins -->
+  <line x1="400" y1="835" x2="1050" y2="835" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="600" y="832" font-size="9" fill="#333">3: notify(all admins, "New Listing Pending")</text>
+
+  <line x1="390" y1="850" x2="900" y2="850" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="550" y="847" font-size="9" fill="#555">4: {message: "Property created, pending review"}</text>
+
+  <!-- Admin reviews -->
+  <line x1="1060" y1="880" x2="400" y2="880" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="600" y="877" font-size="9" fill="#333">5: GET admin&amp;action=properties&amp;status=pending</text>
+
+  <rect x="390" y="878" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <line x1="390" y1="890" x2="560" y2="890" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="560" y="885" width="10" height="15" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <line x1="560" y1="895" x2="400" y2="895" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+
+  <line x1="390" y1="905" x2="1050" y2="905" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="600" y="902" font-size="9" fill="#555">6: pending properties for review</text>
+
+  <!-- Admin approves -->
+  <line x1="1060" y1="925" x2="400" y2="925" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="580" y="922" font-size="9" fill="#333">7: POST admin&amp;action=approve-property&amp;status=active</text>
+
+  <rect x="390" y="925" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="560" y="930" width="10" height="15" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="400" y1="935" x2="560" y2="935" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="420" y="932" font-size="9" fill="#333">8: UPDATE SET status='active'</text>
+
+  <!-- Notify owner -->
+  <line x1="400" y1="960" x2="890" y2="960" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="550" y="957" font-size="9" fill="#333">9: notify(owner, "Property Approved! 🎉")</text>
+
+  <line x1="390" y1="975" x2="1050" y2="975" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="600" y="972" font-size="9" fill="#555">10: {message: "Property status: active"}</text>
+
+  <!-- Owner accepts tenant -->
+  <line x1="900" y1="993" x2="400" y2="993" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="550" y="990" font-size="9" fill="#333">11: POST rentals&amp;action=accept&amp;id=X</text>
+
+  <!-- ===== Phase 5: Notification Polling ===== -->
+  <rect x="10" y="1040" width="640" height="100" rx="5" fill="none" stroke="#555" stroke-width="1.5"/>
+  <rect x="10" y="1040" width="55" height="20" fill="#555" rx="3"/>
+  <text x="37" y="1054" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">loop</text>
+  <text x="75" y="1054" font-size="10" fill="#555">[every 30s — Notification Polling]</text>
+
+  <rect x="210" y="1065" width="10" height="60" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="390" y="1075" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="220" y1="1075" x2="260" y2="1075" stroke="#333" stroke-width="1"/>
+  <line x1="260" y1="1075" x2="260" y2="1078" stroke="#333" stroke-width="1"/>
+  <line x1="260" y1="1078" x2="220" y2="1078" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="265" y="1075" font-size="8" fill="#555">pollTimer()</text>
+
+  <line x1="220" y1="1085" x2="390" y2="1085" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="240" y="1081" font-size="9" fill="#333">GET notifications&amp;action=count</text>
+
+  <line x1="390" y1="1100" x2="220" y2="1100" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="260" y="1097" font-size="9" fill="#555">{count: N}</text>
+
+  <line x1="210" y1="1115" x2="70" y2="1115" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="80" y="1112" font-size="9" fill="#555">update badge + show toast if new</text>
+
+  <!-- ===== Phase 6: Theme & Language ===== -->
+  <rect x="10" y="1155" width="780" height="65" rx="5" fill="none" stroke="#9c27b0" stroke-width="1.5"/>
+  <rect x="10" y="1155" width="140" height="20" fill="#9c27b0" rx="3"/>
+  <text x="80" y="1169" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Cross-cutting Features</text>
+
+  <rect x="60" y="1180" width="10" height="30" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="210" y="1185" width="10" height="20" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="70" y1="1185" x2="210" y2="1185" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="80" y="1181" font-size="9" fill="#333">toggleTheme() / switchLanguage(en|fr|ar)</text>
+
+  <line x1="220" y1="1195" x2="260" y2="1195" stroke="#333" stroke-width="1"/>
+  <line x1="260" y1="1195" x2="260" y2="1200" stroke="#333" stroke-width="1"/>
+  <line x1="260" y1="1200" x2="220" y2="1200" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="265" y="1198" font-size="8" fill="#555">localStorage.set(theme/lang)</text>
+
+  <line x1="210" y1="1205" x2="70" y2="1205" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="80" y="1202" font-size="9" fill="#555">re-render UI (RTL for Arabic)</text>
+
+</svg>
+</div>
+</body>
+</html>

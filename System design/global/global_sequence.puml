@@ -1,0 +1,255 @@
+@startuml Global_Sequence
+' ============================================
+' DarTounsi - Global System
+' Sequence Diagram — Complete User Journey (UML 2.0)
+' ============================================
+
+skinparam participant {
+  BackgroundColor #E85D04
+  FontColor #FFFFFF
+  BorderColor #C44D03
+}
+skinparam sequence {
+  ArrowColor #333333
+  LifeLineBorderColor #333333
+  LifeLineBackgroundColor #FFE0B2
+}
+
+actor ":Visitor" as Visitor
+participant ":SPA\n(app.js)" as SPA
+participant ":API\n(api.php)" as API
+database ":Database" as DB
+participant ":SamsarBot" as Bot #2E7D32
+actor ":Owner" as Owner #4A90D9
+actor ":Admin" as Admin #C62828
+
+' ============================================
+' PHASE 1: REGISTRATION (Sprint 1)
+' ============================================
+
+== Sprint 1 — Identity & Trust ==
+
+group Registration & Onboarding
+  Visitor -> SPA : 1: register(name, email,\npassword, role)
+  activate SPA
+
+  SPA -> API : 2: POST route=auth\n&action=register
+  activate API
+
+  API -> DB : 3: INSERT INTO users\n(bcrypt hash) +\nmatchmaking_profiles
+  activate DB
+  DB --> API : 4: user record
+  deactivate DB
+
+  API -> API : 5: $_SESSION['user_id']
+
+  API --> SPA : 6: {success, user}
+  deactivate API
+
+  SPA --> Visitor : 7: navigate to Dashboard
+  deactivate SPA
+end
+
+group Lifestyle Questionnaire
+  Visitor -> SPA : 8: fillQuestionnaire\n(sleep, noise, pets, budget...)
+  activate SPA
+
+  SPA -> API : 9: POST matchmaking\n&action=save-profile
+  activate API
+
+  API -> DB : 10: INSERT/UPDATE\nmatchmaking_profiles
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API --> SPA : 11: {success}
+  deactivate API
+
+  SPA --> Visitor : 12: show badge
+  deactivate SPA
+end
+
+' ============================================
+' PHASE 2: DISCOVERY (Sprint 2)
+' ============================================
+
+== Sprint 2 — Intelligent Discovery ==
+
+group Search & Filter Properties
+  Visitor -> SPA : 1: search(city, type,\nprice, furnished)
+  activate SPA
+
+  SPA -> API : 2: GET properties\n&action=list&filters
+  activate API
+
+  API -> DB : 3: SELECT * JOIN users\nWHERE filters
+  activate DB
+  DB --> API : 4: properties[] + pagination
+  deactivate DB
+
+  API --> SPA : 5: {data, pagination}
+  deactivate API
+
+  SPA --> Visitor : 6: render animated\n3D property cards
+  deactivate SPA
+end
+
+group View Property Details
+  Visitor -> SPA : 7: clickProperty(id)
+  activate SPA
+
+  SPA -> API : 8: GET properties\n&action=get&id=X
+  activate API
+
+  API -> DB : 9: SELECT property +\nreviews + safety + similar
+  activate DB
+  DB --> API : 10: full property
+  deactivate DB
+
+  API --> SPA : 11: {property, reviews,\nsafety, similar[]}
+  deactivate API
+
+  SPA --> Visitor : 12: render detail page
+  deactivate SPA
+end
+
+group opt: User sends rental request [user wants to rent]
+  Visitor -> SPA : 13: requestToRent(propId, msg)
+  activate SPA
+
+  SPA -> API : 14: POST rentals\n&action=request
+  activate API
+
+  API -> DB : 15: INSERT rental_request
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API -> Owner : 16: notify\n"New Rental Request"
+  API --> SPA : 17: {success}
+  deactivate API
+
+  SPA --> Visitor : 18: showToast("Request sent!")
+  deactivate SPA
+end
+
+' ============================================
+' PHASE 3: AI & MATCHING (Sprint 3)
+' ============================================
+
+== Sprint 3 — AI & Matching ==
+
+group SamsarBot AI Interaction
+  Visitor -> SPA : 1: openSamsarBot()
+  activate SPA
+
+  SPA -> Bot : 2: getContextualSuggestions\n(currentPage)
+  activate Bot
+  Bot --> SPA : 3: suggestions[]
+  deactivate Bot
+
+  Visitor -> SPA : 4: ask("Find roommates?")
+  SPA -> Bot : 5: processMessage(input)
+  activate Bot
+  Bot -> Bot : matchKeywords()
+  Bot --> SPA : 6: FAQ response
+  deactivate Bot
+
+  SPA --> Visitor : 7: display in chat bubble
+  deactivate SPA
+end
+
+group Roommate Matching
+  Visitor -> SPA : 8: navigate(#/matchmaking)
+  activate SPA
+
+  SPA -> API : 9: GET matchmaking\n&action=matches
+  activate API
+
+  API -> DB : 10: SELECT match_results\nJOIN users
+  activate DB
+  DB --> API : 11: matches[] + scores
+  deactivate DB
+
+  API --> SPA : 12: {matches with breakdown}
+  deactivate API
+
+  SPA --> Visitor : 13: render compatibility\ncards (92%, 85%...)
+  deactivate SPA
+end
+
+' ============================================
+' PHASE 4: LISTING LIFECYCLE (Cross-Sprint)
+' ============================================
+
+== Cross-Sprint — Listing Lifecycle ==
+
+group Owner Creates Listing
+  Owner -> API : 1: POST properties\n&action=create
+  activate API
+
+  API -> DB : 2: INSERT property\n(status='pending')
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API -> Admin : 3: notify\n"New Listing Pending"
+
+  API --> Owner : 4: {created, pending review}
+  deactivate API
+end
+
+group Admin Reviews & Approves
+  Admin -> API : 5: GET admin\n&action=properties\n&status=pending
+  activate API
+  API -> DB : 6: SELECT pending
+  activate DB
+  DB --> API : 7: properties[]
+  deactivate DB
+  API --> Admin : 8: render pending list
+  deactivate API
+
+  Admin -> API : 9: POST admin\n&action=approve-property\n&status=active
+  activate API
+  API -> DB : 10: UPDATE status='active'
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API -> Owner : 11: notify\n"Property Approved!"
+  API --> Admin : 12: {status: active}
+  deactivate API
+end
+
+' ============================================
+' PHASE 5: NOTIFICATION POLLING
+' ============================================
+
+== Notification Polling ==
+
+loop every 30 seconds
+  SPA -> API : GET notifications\n&action=count
+  activate API
+  API -> DB : SELECT COUNT(*)\nWHERE is_read=0
+  activate DB
+  DB --> API : count
+  deactivate DB
+  API --> SPA : {count: N}
+  deactivate API
+  SPA --> Visitor : update badge +\ntoast if new
+end
+
+' ============================================
+' PHASE 6: CROSS-CUTTING
+' ============================================
+
+== Cross-cutting Features ==
+
+note over SPA
+  Cross-cutting features:
+  toggleTheme() dark/light
+  switchLang(en|fr|ar) RTL
+  localStorage persistence
+end note
+
+@enduml

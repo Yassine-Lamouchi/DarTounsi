@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 1: Activity Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 1: Identity &amp; Trust</h1>
+<h2>Activity Diagram — Registration &amp; Onboarding (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1050" width="900" height="1050">
+
+  <!-- Swimlanes -->
+  <!-- Visitor/User lane -->
+  <rect x="30" y="40" width="280" height="980" fill="#fef9f0" stroke="#e85d04" stroke-width="1.5" rx="5"/>
+  <text x="170" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#e85d04">User / Visitor</text>
+
+  <!-- Frontend lane -->
+  <rect x="310" y="40" width="280" height="980" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.5" rx="5"/>
+  <text x="450" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a90d9">SPA Frontend (app.js)</text>
+
+  <!-- Backend lane -->
+  <rect x="590" y="40" width="280" height="980" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.5" rx="5"/>
+  <text x="730" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">Backend (api.php + DB)</text>
+
+  <!-- ===== Initial node ===== -->
+  <circle cx="170" cy="100" r="10" fill="#333"/>
+
+  <!-- Flow: Access platform -->
+  <line x1="170" y1="110" x2="170" y2="130" stroke="#333" stroke-width="1.5"/>
+  <polygon points="165,130 170,140 175,130" fill="#333"/>
+
+  <!-- Action: Open DarTounsi -->
+  <rect x="95" y="140" width="150" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="170" y="162" text-anchor="middle" font-size="11" fill="#333">Open DarTounsi</text>
+
+  <line x1="170" y1="176" x2="170" y2="196" stroke="#333" stroke-width="1.5"/>
+  <polygon points="165,196 170,206 175,196" fill="#333"/>
+
+  <!-- Decision: Has account? -->
+  <polygon points="170,208 220,238 170,268 120,238" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="170" y="242" text-anchor="middle" font-size="10" fill="#333">Account?</text>
+
+  <!-- Branch: No → Register -->
+  <line x1="120" y1="238" x2="60" y2="238" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="238" x2="60" y2="310" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="310" x2="95" y2="310" stroke="#333" stroke-width="1.5"/>
+  <polygon points="95,305 105,310 95,315" fill="#333"/>
+  <text x="55" y="275" font-size="10" fill="#555">[No]</text>
+
+  <!-- Decision: Register method? -->
+  <polygon points="170,295 210,315 170,335 130,315" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="170" y="319" text-anchor="middle" font-size="9" fill="#333">Method?</text>
+
+  <!-- Email registration path -->
+  <line x1="130" y1="315" x2="60" y2="315" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="315" x2="60" y2="358" stroke="#333" stroke-width="1.5"/>
+  <polygon points="55,358 60,368 65,358" fill="#333"/>
+  <text x="50" y="340" font-size="9" fill="#555">[Email]</text>
+
+  <!-- Fill registration form -->
+  <rect x="35" y="368" width="140" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="383" text-anchor="middle" font-size="10" fill="#333">Fill Registration</text>
+  <text x="105" y="395" text-anchor="middle" font-size="10" fill="#333">Form</text>
+
+  <!-- Select Role -->
+  <line x1="105" y1="404" x2="105" y2="424" stroke="#333" stroke-width="1.5"/>
+  <polygon points="100,424 105,434 110,424" fill="#333"/>
+  <rect x="35" y="434" width="140" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="449" text-anchor="middle" font-size="10" fill="#333">Select Role</text>
+  <text x="105" y="461" text-anchor="middle" font-size="9" fill="#888">(Tenant/Owner/Hotel Mgr)</text>
+
+  <!-- Submit to frontend -->
+  <line x1="175" y1="452" x2="370" y2="452" stroke="#333" stroke-width="1.5"/>
+  <polygon points="370,447 380,452 370,457" fill="#333"/>
+
+  <!-- Frontend validates -->
+  <rect x="380" y="434" width="140" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="450" y="456" text-anchor="middle" font-size="10" fill="#333">Validate &amp; Submit</text>
+
+  <!-- Send to backend -->
+  <line x1="520" y1="452" x2="650" y2="452" stroke="#333" stroke-width="1.5"/>
+  <polygon points="650,447 660,452 650,457" fill="#333"/>
+
+  <!-- Backend: Check email -->
+  <rect x="660" y="434" width="140" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="730" y="449" text-anchor="middle" font-size="10" fill="#333">Check email</text>
+  <text x="730" y="461" text-anchor="middle" font-size="10" fill="#333">uniqueness</text>
+
+  <!-- Decision: Email exists? -->
+  <line x1="730" y1="470" x2="730" y2="490" stroke="#333" stroke-width="1.5"/>
+  <polygon points="725,490 730,500 735,490" fill="#333"/>
+  <polygon points="730,502 770,522 730,542 690,522" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="730" y="526" text-anchor="middle" font-size="9" fill="#333">Unique?</text>
+
+  <!-- Yes: Create user -->
+  <line x1="730" y1="542" x2="730" y2="562" stroke="#333" stroke-width="1.5"/>
+  <polygon points="725,562 730,572 735,562" fill="#333"/>
+  <text x="755" y="558" font-size="9" fill="#555">[Yes]</text>
+
+  <rect x="660" y="572" width="140" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="730" y="587" text-anchor="middle" font-size="10" fill="#333">Create User +</text>
+  <text x="730" y="599" text-anchor="middle" font-size="10" fill="#333">Session</text>
+
+  <!-- No: Error -->
+  <line x1="770" y1="522" x2="840" y2="522" stroke="#333" stroke-width="1.5"/>
+  <text x="810" y="515" font-size="9" fill="#555">[No]</text>
+  <rect x="790" y="505" width="70" height="30" rx="15" fill="#fce4ec" stroke="#c62828" stroke-width="1"/>
+  <text x="825" y="524" text-anchor="middle" font-size="9" fill="#c62828">Error 409</text>
+
+  <!-- Google path -->
+  <line x1="210" y1="315" x2="250" y2="315" stroke="#333" stroke-width="1.5"/>
+  <line x1="250" y1="315" x2="250" y2="358" stroke="#333" stroke-width="1.5"/>
+  <polygon points="245,358 250,368 255,358" fill="#333"/>
+  <text x="240" y="340" font-size="9" fill="#555">[Google]</text>
+
+  <rect x="180" y="368" width="140" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="250" y="390" text-anchor="middle" font-size="10" fill="#333">Click Google Login</text>
+
+  <line x1="250" y1="404" x2="250" y2="505" stroke="#333" stroke-width="1.5"/>
+  <line x1="250" y1="505" x2="370" y2="505" stroke="#333" stroke-width="1.5"/>
+  <polygon points="370,500 380,505 370,510" fill="#333"/>
+
+  <rect x="380" y="487" width="140" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="450" y="502" text-anchor="middle" font-size="10" fill="#333">Simulate Google</text>
+  <text x="450" y="514" text-anchor="middle" font-size="10" fill="#333">OAuth</text>
+
+  <line x1="520" y1="505" x2="650" y2="590" stroke="#333" stroke-width="1.2"/>
+  <polygon points="650,585 660,590 650,595" fill="#333"/>
+
+  <!-- Branch: Yes → Login -->
+  <line x1="220" y1="238" x2="280" y2="238" stroke="#333" stroke-width="1.5"/>
+  <text x="228" y="230" font-size="10" fill="#555">[Yes]</text>
+  <line x1="280" y1="238" x2="280" y2="340" stroke="#333" stroke-width="1.5"/>
+  <line x1="280" y1="340" x2="370" y2="340" stroke="#333" stroke-width="1.5"/>
+  <polygon points="370,335 380,340 370,345" fill="#333"/>
+
+  <rect x="380" y="322" width="140" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="450" y="344" text-anchor="middle" font-size="10" fill="#333">Login (email/pwd)</text>
+
+  <line x1="520" y1="340" x2="650" y2="400" stroke="#333" stroke-width="1.2"/>
+  <polygon points="650,395 660,400 650,405" fill="#333"/>
+
+  <rect x="660" y="382" width="140" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="730" y="404" text-anchor="middle" font-size="10" fill="#333">Verify Credentials</text>
+
+  <!-- Notify welcome -->
+  <line x1="730" y1="608" x2="730" y2="635" stroke="#333" stroke-width="1.5"/>
+  <polygon points="725,635 730,645 735,635" fill="#333"/>
+  <rect x="660" y="645" width="140" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="730" y="660" text-anchor="middle" font-size="10" fill="#333">Send Welcome</text>
+  <text x="730" y="672" text-anchor="middle" font-size="10" fill="#333">Notification</text>
+
+  <!-- Return to frontend -->
+  <line x1="660" y1="663" x2="520" y2="663" stroke="#333" stroke-width="1.5"/>
+  <polygon points="520,658 510,663 520,668" fill="#333"/>
+
+  <rect x="380" y="645" width="140" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="450" y="667" text-anchor="middle" font-size="10" fill="#333">Navigate to Dashboard</text>
+
+  <!-- Show dashboard to user -->
+  <line x1="380" y1="663" x2="250" y2="663" stroke="#333" stroke-width="1.5"/>
+  <polygon points="250,658 240,663 250,668" fill="#333"/>
+
+  <rect x="95" y="645" width="150" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="170" y="660" text-anchor="middle" font-size="10" fill="#333">View Bento-Grid</text>
+  <text x="170" y="672" text-anchor="middle" font-size="10" fill="#333">Dashboard</text>
+
+  <!-- Decision: Fill questionnaire? -->
+  <line x1="170" y1="681" x2="170" y2="710" stroke="#333" stroke-width="1.5"/>
+  <polygon points="165,710 170,720 175,710" fill="#333"/>
+  <polygon points="170,720 210,745 170,770 130,745" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="170" y="740" text-anchor="middle" font-size="9" fill="#333">Role =</text>
+  <text x="170" y="752" text-anchor="middle" font-size="9" fill="#333">Tenant?</text>
+
+  <!-- Yes: Questionnaire -->
+  <line x1="170" y1="770" x2="170" y2="795" stroke="#333" stroke-width="1.5"/>
+  <polygon points="165,795 170,805 175,795" fill="#333"/>
+  <text x="180" y="790" font-size="9" fill="#555">[Yes]</text>
+
+  <rect x="95" y="805" width="150" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="170" y="820" text-anchor="middle" font-size="10" fill="#333">Complete Lifestyle</text>
+  <text x="170" y="832" text-anchor="middle" font-size="10" fill="#333">Questionnaire</text>
+
+  <line x1="245" y1="823" x2="370" y2="823" stroke="#333" stroke-width="1.5"/>
+  <polygon points="370,818 380,823 370,828" fill="#333"/>
+
+  <rect x="380" y="805" width="140" height="36" rx="18" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="450" y="827" text-anchor="middle" font-size="10" fill="#333">Save Profile Prefs</text>
+
+  <line x1="520" y1="823" x2="650" y2="823" stroke="#333" stroke-width="1.5"/>
+  <polygon points="650,818 660,823 650,828" fill="#333"/>
+
+  <rect x="660" y="805" width="140" height="36" rx="18" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="730" y="820" text-anchor="middle" font-size="10" fill="#333">INSERT matching</text>
+  <text x="730" y="832" text-anchor="middle" font-size="10" fill="#333">profile</text>
+
+  <!-- Merge and end -->
+  <!-- No path from decision -->
+  <line x1="210" y1="745" x2="260" y2="745" stroke="#333" stroke-width="1.5"/>
+  <text x="225" y="738" font-size="9" fill="#555">[No]</text>
+  <line x1="260" y1="745" x2="260" y2="920" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Yes path continues -->
+  <line x1="730" y1="841" x2="730" y2="870" stroke="#333" stroke-width="1.5"/>
+  <line x1="730" y1="870" x2="260" y2="920" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Merge node -->
+  <polygon points="260,910 280,920 260,930 240,920" fill="#333"/>
+
+  <!-- Final activity -->
+  <line x1="260" y1="930" x2="260" y2="950" stroke="#333" stroke-width="1.5"/>
+  <polygon points="255,950 260,960 265,950" fill="#333"/>
+  <rect x="185" y="960" width="150" height="36" rx="18" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="260" y="982" text-anchor="middle" font-size="11" fill="#333">Platform Ready</text>
+
+  <!-- Final node -->
+  <line x1="260" y1="996" x2="260" y2="1007" stroke="#333" stroke-width="1.5"/>
+  <circle cx="260" cy="1017" r="10" fill="#fff" stroke="#333" stroke-width="2"/>
+  <circle cx="260" cy="1017" r="6" fill="#333"/>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+@startuml Sprint1_Activity
+' ============================================
+' DarTounsi - Sprint 1: Identity & Trust
+' Activity Diagram (UML 2.0)
+' ============================================
+
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #E85D04
+  ArrowColor #333333
+  DiamondBackgroundColor #FFFFFF
+  DiamondBorderColor #333333
+}
+skinparam swimlane {
+  BorderColor #333333
+}
+
+title Sprint 1 — User Onboarding Flow
+
+|#FEFAF0| User |
+|#F0F8FF| SPA Frontend |
+|#F0FFF0| Backend (API + DB) |
+
+|User|
+start
+:Open DarTounsi Platform;
+
+|SPA Frontend|
+:Detect Session Status;
+
+if (Has Active Session?) then (yes)
+  |SPA Frontend|
+  :POST route=auth&action=session;
+
+  |Backend (API + DB)|
+  :Validate PHP Session;
+
+  if (Session Valid?) then (yes)
+    |SPA Frontend|
+    :Route to Dashboard;
+  else (no)
+    |SPA Frontend|
+    :Show Landing Page;
+  endif
+else (no)
+  |SPA Frontend|
+  :Show Landing Page;
+endif
+
+|User|
+if (Has Account?) then (yes)
+  :Click "Login";
+
+  |SPA Frontend|
+  :Show Login Form;
+
+  |User|
+  :Enter Email & Password;
+
+  |SPA Frontend|
+  :POST route=auth&action=login;
+
+  |Backend (API + DB)|
+  :Verify Credentials\n(bcrypt compare);
+
+  if (Credentials Valid?) then (yes)
+    :Create PHP Session\n$_SESSION['user_id'];
+  else (no)
+    |SPA Frontend|
+    :Show Error Toast;
+    stop
+  endif
+
+else (no)
+  :Click "Register";
+
+  |SPA Frontend|
+  :Show Registration Form;
+
+  |User|
+  :Fill Name, Email, Password;
+
+  |User|
+  :Select Role;
+  note right
+    Tenant
+    Owner
+    Hotel Manager
+  end note
+
+  if (Use Google OAuth?) then (yes)
+    |SPA Frontend|
+    :Redirect to Google OAuth;
+
+    |Backend (API + DB)|
+    :Validate Google Token\nCreate/Fetch User;
+  else (no)
+    |SPA Frontend|
+    :POST route=auth&action=register;
+
+    |Backend (API + DB)|
+    :Validate Email Uniqueness;
+    :Hash Password (bcrypt);
+    :INSERT INTO users;
+  endif
+
+  |Backend (API + DB)|
+  :INSERT matchmaking_profiles\n(default values);
+  :Create PHP Session;
+endif
+
+|SPA Frontend|
+:Route to Role-Based Dashboard;
+
+|User|
+:View Bento Dashboard\n(Stats, Activity, Quick Actions);
+
+if (First Login?) then (yes)
+  |SPA Frontend|
+  :Show Lifestyle Questionnaire;
+
+  |User|
+  :Fill Preferences;
+  note right
+    Sleep Schedule
+    Noise Level
+    Smoking / Pets
+    Cleanliness
+    Guest Policy
+    Budget Range
+    Location Pref
+  end note
+
+  |SPA Frontend|
+  :POST route=matchmaking\n&action=save-profile;
+
+  |Backend (API + DB)|
+  :Store in matchmaking_profiles;
+
+  |SPA Frontend|
+  :Show Completion Badge ✓;
+else (no)
+endif
+
+|User|
+:Browse Platform;
+stop
+
+@enduml

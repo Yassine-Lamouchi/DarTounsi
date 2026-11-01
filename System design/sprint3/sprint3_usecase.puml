@@ -1,0 +1,74 @@
+@startuml Sprint3_UseCase
+' ============================================
+' DarTounsi - Sprint 3: AI Matchmaking & Payments
+' Use Case Diagram (UML 2.0)
+' ============================================
+
+left to right direction
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  ArrowColor #333333
+}
+
+rectangle "DarTounsi — Sprint 3: AI Matchmaking & Payments" as System #FEFAF0 {
+
+  usecase "Interact with\nSamsarBot AI Chatbot" as UC_BOT
+  usecase "View Roommate\nCompatibility Score" as UC_MATCH
+  usecase "View Match Score\nBreakdown" as UC_BREAK
+  usecase "View Area Safety\nInsights" as UC_SAFETY
+  usecase "Pay for Premium\nListing (Konnect)" as UC_PAY
+  usecase "View Prices in\nMultiple Currencies" as UC_CURR
+  usecase "Review & Approve\nNew Listings" as UC_APPROVE
+  usecase "Manage Platform\nUsers" as UC_USERS
+  usecase "View Admin\nDashboard & Stats" as UC_STATS
+  usecase "Receive Toast\nNotifications" as UC_NOTIF
+  usecase "Resolve\nReports" as UC_REPORTS
+  usecase "Generate Keyword-Rich\nDescription (SamsarBot)" as UC_DESC
+}
+
+actor "Tenant" as Tenant
+actor "Owner" as Owner
+actor "User" as User
+actor "Admin" as Admin
+actor "Super Admin" as SuperAdmin
+
+actor "Konnect API" <<external>> as Konnect
+actor "SamsarBot AI" <<system>> as SamsarBot
+
+' --- Generalizations ---
+SuperAdmin -u-|> Admin
+
+' --- Tenant associations ---
+Tenant --> UC_BOT
+Tenant --> UC_MATCH
+Tenant --> UC_BREAK
+
+' --- Owner associations ---
+Owner --> UC_DESC
+Owner --> UC_PAY
+
+' --- Generic User ---
+User --> UC_CURR
+User --> UC_NOTIF
+User --> UC_BOT
+User --> UC_SAFETY
+
+' --- Admin associations ---
+Admin --> UC_APPROVE
+Admin --> UC_USERS
+Admin --> UC_STATS
+Admin --> UC_REPORTS
+
+' --- External systems ---
+Konnect --> UC_PAY
+SamsarBot --> UC_BOT
+SamsarBot --> UC_DESC
+
+' --- Relationships ---
+UC_MATCH ..> UC_BREAK : <<include>>
+UC_BOT <.. UC_DESC : <<extend>>
+
+@enduml

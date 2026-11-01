@@ -1,0 +1,100 @@
+@startuml Sprint3_Activity
+' ============================================
+' DarTounsi - Sprint 3: AI Matchmaking & Payments
+' Activity Diagram (UML 2.0)
+' ============================================
+
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #E85D04
+  ArrowColor #333333
+  DiamondBackgroundColor #FFFFFF
+  DiamondBorderColor #333333
+}
+
+title Sprint 3 — Admin Approval & Premium Payment Flow
+
+|#FEFAF0| Owner |
+|#F0F8FF| System (API + DB) |
+|#F0FFF0| Admin |
+|#FFF3E0| Konnect Payment |
+
+|Owner|
+start
+:Create New Property\nListing;
+note right
+  title, description
+  type, price, city
+  images, amenities
+end note
+
+|System (API + DB)|
+:Validate & Save\nstatus = "**pending**";
+:Notify All Admins\n"New Listing Pending Review";
+
+|Admin|
+:View Pending\nListings Dashboard;
+:Review Property Details\n(title, images, description, price);
+
+if (Approve Listing?) then (yes)
+  :Approve Listing;
+
+  |System (API + DB)|
+  :UPDATE property\nSET status = '**active**';
+  :Notify Owner\n"Property Approved! ✓";
+
+  |Owner|
+  #LightGreen:🔔 Toast Notification:\n"Your property has been approved!";
+
+else (no)
+  |Admin|
+  :Reject Listing\n(provide reason);
+
+  |System (API + DB)|
+  :UPDATE property\nSET status = '**rejected**';
+  :Notify Owner\n"Property Rejected";
+
+  |Owner|
+  #LightPink:🔔 Toast Notification:\n"Property rejected. Reason: ...";
+endif
+
+|Owner|
+if (Make Premium?) then (yes)
+  :Click "Make Premium"\n(Konnect Payment);
+
+  |System (API + DB)|
+  :Create Payment Record\n(status: pending);
+  :Generate Konnect\nPayment URL;
+
+  |Konnect Payment|
+  :Process Payment\nvia Konnect API;
+
+  if (Payment Success?) then (yes)
+    :Return transaction_ref\nstatus = completed;
+
+    |System (API + DB)|
+    :UPDATE payment SET\nstatus = 'completed';
+    :UPDATE property SET\nis_premium = **true**;
+
+    |Owner|
+    #Gold:✨ Property now PREMIUM\n(featured listing with gold badge);
+
+  else (no)
+    |Konnect Payment|
+    #LightPink:Payment Failed;
+
+    |System (API + DB)|
+    :UPDATE payment SET\nstatus = 'failed';
+
+    |Owner|
+    #LightPink:Show error:\n"Payment failed. Try again.";
+  endif
+
+else (no)
+endif
+
+|Owner|
+:Listing Active\n(visible to tenants);
+stop
+
+@enduml

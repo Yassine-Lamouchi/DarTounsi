@@ -1,0 +1,151 @@
+@startuml Sprint3_Class
+' ============================================
+' DarTounsi - Sprint 3: AI Matchmaking & Payments
+' Class Diagram (UML 2.0)
+' ============================================
+
+skinparam class {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  HeaderBackgroundColor #E85D04
+  FontColor #333333
+  ArrowColor #333333
+}
+skinparam stereotypeCBackgroundColor #F0FFF0
+
+class MatchResult {
+  - id : int <<PK>>
+  - user_a_id : int <<FK → User>>
+  - user_b_id : int <<FK → User>>
+  - compatibility_score : decimal(5,2)
+  - score_breakdown : JSON
+  .. breakdown fields ..
+  {sleep, noise, smoking, pets,
+  cleanliness, guests, budget, location}
+  - created_at : datetime
+  __
+  + getMatches(userId) : MatchResult[]
+  + calculateScore(profileA, profileB) : float
+}
+
+class Payment {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - amount : decimal(10,2)
+  - currency : varchar(3) {TND|EUR|USD}
+  - payment_method : varchar(50) = 'konnect'
+  - status : enum {pending, completed, failed}
+  - transaction_ref : varchar(100)
+  - created_at : datetime
+  __
+  + createPayment(userId, propId, amount) : void
+  + completePayment(txRef) : void
+  + getByProperty(propId) : Payment[]
+}
+
+class AreaSafety {
+  - id : int <<PK>>
+  - city : varchar(50)
+  - neighborhood : varchar(100)
+  - safety_score : int {1..100}
+  - description : text
+  - stats : JSON
+  .. stats fields ..
+  {police_stations, hospitals, crime_rate}
+  __
+  + getSafety(city, neighborhood) : AreaSafety
+  + getScoreColor(score) : string
+}
+
+class Report {
+  - id : int <<PK>>
+  - reporter_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - reason : varchar(100)
+  - details : text
+  - status : enum {pending, reviewed, resolved}
+  - created_at : datetime
+  __
+  + create(reporterId, propId, reason) : void
+  + resolve(reportId) : void
+  + listPending() : Report[]
+}
+
+class Notification {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - type : varchar(50)
+  - title : varchar(200)
+  - message : text
+  - link : varchar(255)
+  - is_read : boolean = false
+  - created_at : datetime
+  __
+  + notify(userId, type, title, msg, link) : void
+  + markRead(id) : void
+  + markAllRead(userId) : void
+  + count(userId) : int
+}
+
+class SamsarBot <<controller>> #F0FFF0 {
+  - faqDatabase : Map<keyword, response>
+  - currentPage : string
+  - conversationHistory : Message[]
+  __
+  + processMessage(input) : string
+  + getContextualSuggestions(page) : string[]
+  + generateDescription(property) : string
+  + matchKeywords(input) : Response
+  + identifyAsAI() : string
+  + getGreeting() : string
+}
+
+class AdminController <<controller>> #F0FFF0 {
+  - currentAdmin : User
+  __
+  + getStats() : AdminStats
+  + listUsers(filters) : User[]
+  + listProperties(status) : Property[]
+  + verifyUser(userId, status) : void
+  + deleteUser(userId) : void
+  + approveProperty(propId, status) : void
+  + deleteProperty(propId) : void
+  + getReports() : Report[]
+  + resolveReport(reportId) : void
+  + isSuperAdmin(userId) : boolean
+  + requireRole(roles[]) : int {userId}
+}
+
+class User {
+  - id : int <<PK>>
+  - role : UserRole
+  - is_verified : boolean
+  __
+  + isSuperAdmin() : boolean
+  + isAdminOrSuper() : boolean
+}
+
+class Property {
+  - status : PropertyStatus
+  - is_premium : boolean
+  - neighborhood : varchar(100)
+  __
+  + makePremium() : void
+}
+
+' --- Relationships ---
+User "2" -- "0..*" MatchResult : matched_users
+User "1" *-- "0..*" Payment
+User "1" *-- "0..*" Notification
+User "1" -- "0..*" Report : reports >
+Property "1" -- "0..*" Payment
+Property "1" -- "0..*" Report
+Property "0..*" -- "0..1" AreaSafety : located_in >
+
+AdminController ..> Report : <<use>>
+AdminController ..> Property : <<use>>
+AdminController ..> User : <<use>>
+SamsarBot ..> Property : <<use>>
+
+@enduml

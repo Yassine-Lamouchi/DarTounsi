@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 3: Class Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 3: AI Matchmaking &amp; Payments</h1>
+<h2>Class Diagram (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 830" width="1280" height="830">
+  <defs>
+    <marker id="diamond-filled" markerWidth="14" markerHeight="10" refX="14" refY="5" orient="auto">
+      <polygon points="0 5, 7 0, 14 5, 7 10" fill="#333" stroke="#333" stroke-width="1"/>
+    </marker>
+    <marker id="arrow-dep" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polyline points="0 0, 10 3.5, 0 7" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- ===== MatchResult Class ===== -->
+  <rect x="30" y="30" width="310" height="220" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="30" y="30" width="310" height="35" rx="4" fill="#e85d04"/>
+  <text x="185" y="53" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">MatchResult</text>
+  <line x1="30" y1="65" x2="340" y2="65" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="83" font-size="11" fill="#333">- id : int</text>
+  <text x="40" y="98" font-size="11" fill="#333">- user_a_id : int</text>
+  <text x="40" y="113" font-size="11" fill="#333">- user_b_id : int</text>
+  <text x="40" y="128" font-size="11" fill="#333">- compatibility_score : decimal(5,2)</text>
+  <text x="40" y="143" font-size="11" fill="#333">- score_breakdown : JSON</text>
+  <text x="40" y="158" font-size="11" fill="#333">  {sleep, noise, smoking, pets,</text>
+  <text x="40" y="173" font-size="11" fill="#333">   cleanliness, guests, budget, location}</text>
+  <text x="40" y="188" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="30" y1="198" x2="340" y2="198" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="216" font-size="11" fill="#333">+ getMatches(userId) : MatchResult[]</text>
+  <text x="40" y="231" font-size="11" fill="#333">+ calculateScore(profileA, profileB) : float</text>
+
+  <!-- ===== Payment Class ===== -->
+  <rect x="30" y="290" width="310" height="230" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="30" y="290" width="310" height="35" rx="4" fill="#e85d04"/>
+  <text x="185" y="313" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Payment</text>
+  <line x1="30" y1="325" x2="340" y2="325" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="343" font-size="11" fill="#333">- id : int</text>
+  <text x="40" y="358" font-size="11" fill="#333">- user_id : int</text>
+  <text x="40" y="373" font-size="11" fill="#333">- property_id : int</text>
+  <text x="40" y="388" font-size="11" fill="#333">- amount : decimal(10,2)</text>
+  <text x="40" y="403" font-size="11" fill="#333">- currency : string {TND|EUR|USD}</text>
+  <text x="40" y="418" font-size="11" fill="#333">- payment_method : string {konnect}</text>
+  <text x="40" y="433" font-size="11" fill="#333">- status : «enum» {pending|completed|failed}</text>
+  <text x="40" y="448" font-size="11" fill="#333">- transaction_ref : string</text>
+  <text x="40" y="463" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="30" y1="473" x2="340" y2="473" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="491" font-size="11" fill="#333">+ createPayment(userId, propId, amount) : void</text>
+  <text x="40" y="506" font-size="11" fill="#333">+ completePayment(txRef) : void</text>
+
+  <!-- ===== AreaSafety Class ===== -->
+  <rect x="30" y="560" width="310" height="200" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="30" y="560" width="310" height="35" rx="4" fill="#e85d04"/>
+  <text x="185" y="583" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">AreaSafety</text>
+  <line x1="30" y1="595" x2="340" y2="595" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="613" font-size="11" fill="#333">- id : int</text>
+  <text x="40" y="628" font-size="11" fill="#333">- city : string</text>
+  <text x="40" y="643" font-size="11" fill="#333">- neighborhood : string</text>
+  <text x="40" y="658" font-size="11" fill="#333">- safety_score : int {1..100}</text>
+  <text x="40" y="673" font-size="11" fill="#333">- description : text</text>
+  <text x="40" y="688" font-size="11" fill="#333">- stats : JSON</text>
+  <text x="40" y="703" font-size="11" fill="#333">  {police_stations, hospitals, crime_rate}</text>
+  <line x1="30" y1="713" x2="340" y2="713" stroke="#e85d04" stroke-width="1"/>
+  <text x="40" y="731" font-size="11" fill="#333">+ getSafety(city, neighborhood) : AreaSafety</text>
+  <text x="40" y="746" font-size="11" fill="#333">+ getScoreColor(score) : string</text>
+
+  <!-- ===== Report Class ===== -->
+  <rect x="410" y="30" width="300" height="210" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="410" y="30" width="300" height="35" rx="4" fill="#e85d04"/>
+  <text x="560" y="53" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Report</text>
+  <line x1="410" y1="65" x2="710" y2="65" stroke="#e85d04" stroke-width="1"/>
+  <text x="420" y="83" font-size="11" fill="#333">- id : int</text>
+  <text x="420" y="98" font-size="11" fill="#333">- reporter_id : int</text>
+  <text x="420" y="113" font-size="11" fill="#333">- property_id : int</text>
+  <text x="420" y="128" font-size="11" fill="#333">- reason : string</text>
+  <text x="420" y="143" font-size="11" fill="#333">- details : text</text>
+  <text x="420" y="158" font-size="11" fill="#333">- status : «enum» {pending|reviewed|resolved}</text>
+  <text x="420" y="173" font-size="11" fill="#333">- created_at : datetime</text>
+  <line x1="410" y1="183" x2="710" y2="183" stroke="#e85d04" stroke-width="1"/>
+  <text x="420" y="201" font-size="11" fill="#333">+ create(reporterId, propId, reason) : void</text>
+  <text x="420" y="216" font-size="11" fill="#333">+ resolve(reportId) : void</text>
+  <text x="420" y="231" font-size="11" fill="#333">+ listPending() : Report[]</text>
+
+  <!-- ===== Notification (reference) ===== -->
+  <rect x="410" y="290" width="300" height="160" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="410" y="290" width="300" height="35" rx="4" fill="#e85d04"/>
+  <text x="560" y="313" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Notification</text>
+  <line x1="410" y1="325" x2="710" y2="325" stroke="#e85d04" stroke-width="1"/>
+  <text x="420" y="343" font-size="11" fill="#333">- id : int</text>
+  <text x="420" y="358" font-size="11" fill="#333">- user_id : int</text>
+  <text x="420" y="373" font-size="11" fill="#333">- type : string</text>
+  <text x="420" y="388" font-size="11" fill="#333">- title : string</text>
+  <text x="420" y="403" font-size="11" fill="#333">- message : text</text>
+  <text x="420" y="418" font-size="11" fill="#333">- is_read : boolean</text>
+  <line x1="410" y1="425" x2="710" y2="425" stroke="#e85d04" stroke-width="1"/>
+  <text x="420" y="443" font-size="11" fill="#333">+ notify(userId, type, title, msg, link) : void</text>
+
+  <!-- ===== SamsarBot Controller ===== -->
+  <rect x="410" y="500" width="300" height="200" rx="4" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.5"/>
+  <rect x="410" y="500" width="300" height="30" rx="4" fill="#2e7d32"/>
+  <text x="560" y="520" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">«controller» SamsarBot</text>
+  <line x1="410" y1="530" x2="710" y2="530" stroke="#2e7d32" stroke-width="1"/>
+  <text x="420" y="548" font-size="11" fill="#333">- faqDatabase : Map&lt;keyword, response&gt;</text>
+  <text x="420" y="563" font-size="11" fill="#333">- currentPage : string</text>
+  <text x="420" y="578" font-size="11" fill="#333">- conversationHistory : Message[]</text>
+  <line x1="410" y1="590" x2="710" y2="590" stroke="#2e7d32" stroke-width="1"/>
+  <text x="420" y="608" font-size="11" fill="#333">+ processMessage(input) : string</text>
+  <text x="420" y="623" font-size="11" fill="#333">+ getContextualSuggestions(page) : string[]</text>
+  <text x="420" y="638" font-size="11" fill="#333">+ generateDescription(property) : string</text>
+  <text x="420" y="653" font-size="11" fill="#333">+ matchKeywords(input) : Response</text>
+  <text x="420" y="668" font-size="11" fill="#333">+ identifyAsAI() : string</text>
+  <text x="420" y="683" font-size="11" fill="#333">+ getGreeting() : string</text>
+
+  <!-- ===== AdminController ===== -->
+  <rect x="780" y="30" width="310" height="240" rx="4" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.5"/>
+  <rect x="780" y="30" width="310" height="30" rx="4" fill="#2e7d32"/>
+  <text x="935" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">«controller» AdminController</text>
+  <line x1="780" y1="60" x2="1090" y2="60" stroke="#2e7d32" stroke-width="1"/>
+  <text x="790" y="78" font-size="11" fill="#333">- currentAdmin : User</text>
+  <line x1="780" y1="88" x2="1090" y2="88" stroke="#2e7d32" stroke-width="1"/>
+  <text x="790" y="106" font-size="11" fill="#333">+ getStats() : AdminStats</text>
+  <text x="790" y="121" font-size="11" fill="#333">+ listUsers(filters) : User[]</text>
+  <text x="790" y="136" font-size="11" fill="#333">+ listProperties(status) : Property[]</text>
+  <text x="790" y="151" font-size="11" fill="#333">+ verifyUser(userId, status) : void</text>
+  <text x="790" y="166" font-size="11" fill="#333">+ deleteUser(userId) : void</text>
+  <text x="790" y="181" font-size="11" fill="#333">+ approveProperty(propId, status) : void</text>
+  <text x="790" y="196" font-size="11" fill="#333">+ deleteProperty(propId) : void</text>
+  <text x="790" y="211" font-size="11" fill="#333">+ getReports() : Report[]</text>
+  <text x="790" y="226" font-size="11" fill="#333">+ resolveReport(reportId) : void</text>
+  <text x="790" y="241" font-size="11" fill="#333">+ isSuperAdmin(userId) : boolean</text>
+  <text x="790" y="256" font-size="11" fill="#333">+ requireRole(roles) : userId</text>
+
+  <!-- ===== User (simplified ref) ===== -->
+  <rect x="780" y="310" width="310" height="130" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="780" y="310" width="310" height="35" rx="4" fill="#e85d04"/>
+  <text x="935" y="333" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">User</text>
+  <line x1="780" y1="345" x2="1090" y2="345" stroke="#e85d04" stroke-width="1"/>
+  <text x="790" y="363" font-size="11" fill="#333">- id : int</text>
+  <text x="790" y="378" font-size="11" fill="#333">- role : UserRole</text>
+  <text x="790" y="393" font-size="11" fill="#333">- is_verified : boolean</text>
+  <line x1="780" y1="403" x2="1090" y2="403" stroke="#e85d04" stroke-width="1"/>
+  <text x="790" y="421" font-size="11" fill="#333">+ isSuperAdmin() : boolean</text>
+  <text x="790" y="436" font-size="11" fill="#333">+ isAdminOrSuper() : boolean</text>
+
+  <!-- ===== Property (simplified ref) ===== -->
+  <rect x="780" y="490" width="310" height="120" rx="4" fill="#fff8f0" stroke="#e85d04" stroke-width="2"/>
+  <rect x="780" y="490" width="310" height="35" rx="4" fill="#e85d04"/>
+  <text x="935" y="513" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">Property</text>
+  <line x1="780" y1="525" x2="1090" y2="525" stroke="#e85d04" stroke-width="1"/>
+  <text x="790" y="543" font-size="11" fill="#333">- status : PropertyStatus</text>
+  <text x="790" y="558" font-size="11" fill="#333">- is_premium : boolean</text>
+  <text x="790" y="573" font-size="11" fill="#333">- neighborhood : string</text>
+  <line x1="780" y1="583" x2="1090" y2="583" stroke="#e85d04" stroke-width="1"/>
+  <text x="790" y="601" font-size="11" fill="#333">+ makePremium() : void</text>
+
+  <!-- ===== Relationships ===== -->
+  <!-- User 1 -- * MatchResult (both sides) -->
+  <line x1="780" y1="370" x2="350" y2="370" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="370" x2="350" y2="140" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="140" x2="340" y2="140" stroke="#333" stroke-width="1.5"/>
+  <text x="763" y="362" font-size="10" fill="#555">2</text>
+  <text x="345" y="132" font-size="10" fill="#555">*</text>
+  <text x="550" y="362" font-size="10" fill="#555" font-style="italic">matched_users</text>
+
+  <!-- User 1 -- * Payment -->
+  <line x1="780" y1="400" x2="360" y2="400" stroke="#333" stroke-width="1.5" marker-start="url(#diamond-filled)"/>
+  <text x="764" y="394" font-size="10" fill="#555">1</text>
+  <text x="370" y="394" font-size="10" fill="#555">*</text>
+  <line x1="360" y1="400" x2="340" y2="400" stroke="#333" stroke-width="1.5"/>
+
+  <!-- User 1 -- * Notification -->
+  <line x1="780" y1="345" x2="710" y2="345" stroke="#333" stroke-width="1.5" marker-start="url(#diamond-filled)"/>
+  <text x="763" y="338" font-size="10" fill="#555">1</text>
+  <text x="713" y="338" font-size="10" fill="#555">*</text>
+
+  <!-- User 1 -- * Report -->
+  <line x1="780" y1="355" x2="740" y2="355" stroke="#333" stroke-width="1.5"/>
+  <line x1="740" y1="355" x2="740" y2="130" stroke="#333" stroke-width="1.5"/>
+  <line x1="740" y1="130" x2="710" y2="130" stroke="#333" stroke-width="1.5"/>
+  <text x="735" y="145" font-size="10" fill="#555">*</text>
+  <text x="745" y="340" font-size="10" fill="#555">1</text>
+
+  <!-- Property -- AreaSafety (association) -->
+  <line x1="780" y1="570" x2="740" y2="570" stroke="#333" stroke-width="1.5"/>
+  <line x1="740" y1="570" x2="740" y2="660" stroke="#333" stroke-width="1.5"/>
+  <line x1="740" y1="660" x2="340" y2="660" stroke="#333" stroke-width="1.5"/>
+  <text x="765" y="563" font-size="10" fill="#555">*</text>
+  <text x="348" y="653" font-size="10" fill="#555">0..1</text>
+  <text x="540" y="653" font-size="10" fill="#555" font-style="italic">located_in ▶</text>
+
+  <!-- Property 1 -- * Payment -->
+  <line x1="780" y1="550" x2="370" y2="430" stroke="#333" stroke-width="1.5"/>
+  <text x="765" y="543" font-size="10" fill="#555">1</text>
+  <text x="380" y="425" font-size="10" fill="#555">*</text>
+
+  <!-- AdminController ..> Report (use) -->
+  <line x1="935" y1="270" x2="680" y2="240" stroke="#333" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow-dep)"/>
+  <text x="800" y="250" font-size="10" fill="#555" font-style="italic">«use»</text>
+
+  <!-- AdminController ..> Property (use) -->
+  <line x1="935" y1="270" x2="935" y2="490" stroke="#333" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow-dep)"/>
+  <text x="942" y="380" font-size="10" fill="#555" font-style="italic">«use»</text>
+
+  <!-- SamsarBot ..> Property (use) -->
+  <line x1="710" y1="600" x2="780" y2="560" stroke="#333" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow-dep)"/>
+  <text x="725" y="570" font-size="10" fill="#555" font-style="italic">«use»</text>
+
+</svg>
+</div>
+</body>
+</html>

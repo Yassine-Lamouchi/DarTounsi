@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Global: Use Case Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Global System</h1>
+<h2>Use Case Diagram — Complete Platform (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350 1050" width="1350" height="1050">
+  <defs>
+    <marker id="arrow-open" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polyline points="0 0, 12 4, 0 8" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- System boundary -->
+  <rect x="260" y="30" width="830" height="990" rx="15" fill="#fef9f0" stroke="#e85d04" stroke-width="2"/>
+  <text x="675" y="58" text-anchor="middle" font-size="16" font-weight="bold" fill="#e85d04">DarTounsi — Web Platform for Real Estate Rental &amp; Co-living</text>
+
+  <!-- ===== Actors ===== -->
+  <!-- Visitor -->
+  <line x1="80" y1="120" x2="80" y2="155" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="110" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="135" x2="100" y2="135" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="155" x2="60" y2="180" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="155" x2="100" y2="180" stroke="#333" stroke-width="2"/>
+  <text x="80" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Visitor</text>
+
+  <!-- Tenant -->
+  <line x1="80" y1="340" x2="80" y2="375" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="330" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="355" x2="100" y2="355" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="375" x2="60" y2="400" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="375" x2="100" y2="400" stroke="#333" stroke-width="2"/>
+  <text x="80" y="418" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Tenant</text>
+
+  <!-- Student (sub of Tenant) -->
+  <line x1="80" y1="490" x2="80" y2="525" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="480" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="505" x2="100" y2="505" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="525" x2="60" y2="550" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="525" x2="100" y2="550" stroke="#333" stroke-width="2"/>
+  <text x="80" y="568" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Student</text>
+
+  <!-- Generalization: Student extends Tenant -->
+  <line x1="80" y1="468" x2="80" y2="418" stroke="#333" stroke-width="1.5"/>
+  <polygon points="73,430 80,418 87,430" fill="#fff" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Owner -->
+  <line x1="80" y1="680" x2="80" y2="715" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="670" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="695" x2="100" y2="695" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="715" x2="60" y2="740" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="715" x2="100" y2="740" stroke="#333" stroke-width="2"/>
+  <text x="80" y="758" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Owner</text>
+
+  <!-- Hotel Manager (sub of Owner) -->
+  <line x1="80" y1="830" x2="80" y2="865" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="820" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="845" x2="100" y2="845" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="865" x2="60" y2="890" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="865" x2="100" y2="890" stroke="#333" stroke-width="2"/>
+  <text x="80" y="908" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Hotel Mgr</text>
+
+  <!-- Generalization: Hotel Mgr extends Owner -->
+  <line x1="80" y1="808" x2="80" y2="758" stroke="#333" stroke-width="1.5"/>
+  <polygon points="73,770 80,758 87,770" fill="#fff" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Admin (right) -->
+  <line x1="1230" y1="300" x2="1230" y2="335" stroke="#333" stroke-width="2"/>
+  <circle cx="1230" cy="290" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="1210" y1="315" x2="1250" y2="315" stroke="#333" stroke-width="2"/>
+  <line x1="1230" y1="335" x2="1210" y2="360" stroke="#333" stroke-width="2"/>
+  <line x1="1230" y1="335" x2="1250" y2="360" stroke="#333" stroke-width="2"/>
+  <text x="1230" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Admin</text>
+
+  <!-- Super Admin (sub of Admin) -->
+  <line x1="1230" y1="440" x2="1230" y2="475" stroke="#333" stroke-width="2"/>
+  <circle cx="1230" cy="430" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="1210" y1="455" x2="1250" y2="455" stroke="#333" stroke-width="2"/>
+  <line x1="1230" y1="475" x2="1210" y2="500" stroke="#333" stroke-width="2"/>
+  <line x1="1230" y1="475" x2="1250" y2="500" stroke="#333" stroke-width="2"/>
+  <text x="1230" y="518" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Super Admin</text>
+
+  <line x1="1230" y1="418" x2="1230" y2="378" stroke="#333" stroke-width="1.5"/>
+  <polygon points="1223,390 1230,378 1237,390" fill="#fff" stroke="#333" stroke-width="1.5"/>
+
+  <!-- External systems (right bottom) -->
+  <rect x="1180" y="600" width="120" height="45" rx="5" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="1240" y="618" text-anchor="middle" font-size="10" fill="#333">«actor»</text>
+  <text x="1240" y="635" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Google API</text>
+
+  <rect x="1180" y="680" width="120" height="45" rx="5" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="1240" y="698" text-anchor="middle" font-size="10" fill="#333">«actor»</text>
+  <text x="1240" y="715" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Konnect API</text>
+
+  <rect x="1180" y="760" width="120" height="45" rx="5" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="1240" y="778" text-anchor="middle" font-size="10" fill="#333">«system»</text>
+  <text x="1240" y="795" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">SamsarBot AI</text>
+
+  <!-- ===== Sprint 1 Use Cases ===== -->
+  <rect x="275" y="68" width="180" height="18" rx="3" fill="#e85d04" opacity="0.15"/>
+  <text x="365" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#e85d04">Sprint 1 — Identity &amp; Trust</text>
+
+  <ellipse cx="400" cy="120" rx="110" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="124" text-anchor="middle" font-size="10" fill="#333">Register (Email/Google)</text>
+
+  <ellipse cx="400" cy="170" rx="100" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="174" text-anchor="middle" font-size="10" fill="#333">Select Role</text>
+
+  <ellipse cx="400" cy="220" rx="100" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="224" text-anchor="middle" font-size="10" fill="#333">Login</text>
+
+  <ellipse cx="400" cy="270" rx="100" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="274" text-anchor="middle" font-size="10" fill="#333">View Dashboard</text>
+
+  <ellipse cx="400" cy="320" rx="120" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="324" text-anchor="middle" font-size="10" fill="#333">Complete Questionnaire</text>
+
+  <ellipse cx="400" cy="370" rx="120" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="374" text-anchor="middle" font-size="10" fill="#333">View Verification Badges</text>
+
+  <ellipse cx="400" cy="420" rx="100" ry="22" fill="#fff8f0" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="400" y="424" text-anchor="middle" font-size="10" fill="#333">Manage Profile</text>
+
+  <!-- ===== Sprint 2 Use Cases ===== -->
+  <rect x="570" y="68" width="200" height="18" rx="3" fill="#4a90d9" opacity="0.15"/>
+  <text x="670" y="82" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a90d9">Sprint 2 — Intelligent Discovery</text>
+
+  <ellipse cx="680" cy="120" rx="115" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="124" text-anchor="middle" font-size="10" fill="#333">Browse Properties (Map)</text>
+
+  <ellipse cx="680" cy="170" rx="120" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="174" text-anchor="middle" font-size="10" fill="#333">Search Near University</text>
+
+  <ellipse cx="680" cy="220" rx="120" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="224" text-anchor="middle" font-size="10" fill="#333">Filter by Preferences</text>
+
+  <ellipse cx="680" cy="270" rx="125" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="274" text-anchor="middle" font-size="10" fill="#333">View Animated Property Cards</text>
+
+  <ellipse cx="680" cy="320" rx="125" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="324" text-anchor="middle" font-size="10" fill="#333">Contact via WhatsApp</text>
+
+  <ellipse cx="680" cy="370" rx="110" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="374" text-anchor="middle" font-size="10" fill="#333">Submit Review &amp; Rating</text>
+
+  <ellipse cx="680" cy="420" rx="100" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="424" text-anchor="middle" font-size="10" fill="#333">Toggle Favorites</text>
+
+  <ellipse cx="680" cy="470" rx="110" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="474" text-anchor="middle" font-size="10" fill="#333">Send Rental Request</text>
+
+  <ellipse cx="680" cy="520" rx="100" ry="22" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.2"/>
+  <text x="680" y="524" text-anchor="middle" font-size="10" fill="#333">Send Messages</text>
+
+  <!-- ===== Sprint 3 Use Cases ===== -->
+  <rect x="275" y="475" width="230" height="18" rx="3" fill="#2e7d32" opacity="0.15"/>
+  <text x="390" y="489" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e7d32">Sprint 3 — AI Matchmaking &amp; Payments</text>
+
+  <ellipse cx="400" cy="520" rx="120" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="524" text-anchor="middle" font-size="10" fill="#333">Interact with SamsarBot</text>
+
+  <ellipse cx="400" cy="570" rx="130" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="574" text-anchor="middle" font-size="10" fill="#333">View Roommate Compatibility</text>
+
+  <ellipse cx="400" cy="620" rx="120" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="624" text-anchor="middle" font-size="10" fill="#333">View Match Breakdown</text>
+
+  <ellipse cx="400" cy="670" rx="110" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="674" text-anchor="middle" font-size="10" fill="#333">View Area Safety</text>
+
+  <!-- Owner use cases (Sprint 3) -->
+  <ellipse cx="400" cy="740" rx="130" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="744" text-anchor="middle" font-size="10" fill="#333">Pay Premium (Konnect)</text>
+
+  <ellipse cx="400" cy="790" rx="120" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="794" text-anchor="middle" font-size="10" fill="#333">Create Property Listing</text>
+
+  <ellipse cx="400" cy="840" rx="130" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="400" y="844" text-anchor="middle" font-size="10" fill="#333">Accept/Reject Tenants</text>
+
+  <!-- Cross-cutting / Generic -->
+  <ellipse cx="680" cy="590" rx="130" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="680" y="594" text-anchor="middle" font-size="10" fill="#333">View Multi-Currency Prices</text>
+
+  <ellipse cx="680" cy="635" rx="120" ry="22" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="680" y="639" text-anchor="middle" font-size="10" fill="#333">Receive Notifications</text>
+
+  <!-- Admin use cases -->
+  <rect x="800" y="700" width="230" height="18" rx="3" fill="#c62828" opacity="0.12"/>
+  <text x="915" y="714" text-anchor="middle" font-size="10" font-weight="bold" fill="#c62828">Admin Management</text>
+
+  <ellipse cx="910" cy="745" rx="130" ry="22" fill="#fff" stroke="#c62828" stroke-width="1.2"/>
+  <text x="910" y="749" text-anchor="middle" font-size="10" fill="#333">Approve/Reject Listings</text>
+
+  <ellipse cx="910" cy="795" rx="110" ry="22" fill="#fff" stroke="#c62828" stroke-width="1.2"/>
+  <text x="910" y="799" text-anchor="middle" font-size="10" fill="#333">Manage Users</text>
+
+  <ellipse cx="910" cy="845" rx="110" ry="22" fill="#fff" stroke="#c62828" stroke-width="1.2"/>
+  <text x="910" y="849" text-anchor="middle" font-size="10" fill="#333">Verify User Account</text>
+
+  <ellipse cx="910" cy="895" rx="110" ry="22" fill="#fff" stroke="#c62828" stroke-width="1.2"/>
+  <text x="910" y="899" text-anchor="middle" font-size="10" fill="#333">Resolve Reports</text>
+
+  <ellipse cx="910" cy="945" rx="130" ry="22" fill="#fff" stroke="#c62828" stroke-width="1.2"/>
+  <text x="910" y="949" text-anchor="middle" font-size="10" fill="#333">View Admin Dashboard</text>
+
+  <!-- ===== Actor Associations ===== -->
+  <!-- Visitor -->
+  <line x1="100" y1="140" x2="290" y2="120" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="145" x2="300" y2="170" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="150" x2="300" y2="220" stroke="#333" stroke-width="1"/>
+
+  <!-- Tenant -->
+  <line x1="100" y1="355" x2="300" y2="270" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="360" x2="280" y2="320" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="365" x2="280" y2="370" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="370" x2="300" y2="420" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="355" x2="555" y2="120" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="360" x2="555" y2="225" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="365" x2="555" y2="275" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="370" x2="555" y2="325" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="375" x2="555" y2="375" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="378" x2="555" y2="425" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="380" x2="555" y2="475" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="385" x2="555" y2="525" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="370" x2="280" y2="520" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="375" x2="270" y2="570" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="380" x2="290" y2="620" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="383" x2="290" y2="670" stroke="#333" stroke-width="1"/>
+
+  <!-- Owner -->
+  <line x1="100" y1="700" x2="270" y2="740" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="695" x2="270" y2="790" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="690" x2="270" y2="840" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="685" x2="300" y2="420" stroke="#333" stroke-width="1"/>
+  <line x1="100" y1="680" x2="300" y2="270" stroke="#333" stroke-width="1"/>
+
+  <!-- Admin -->
+  <line x1="1210" y1="310" x2="1040" y2="745" stroke="#333" stroke-width="1"/>
+  <line x1="1210" y1="315" x2="1020" y2="795" stroke="#333" stroke-width="1"/>
+  <line x1="1210" y1="320" x2="1020" y2="845" stroke="#333" stroke-width="1"/>
+  <line x1="1210" y1="325" x2="1020" y2="895" stroke="#333" stroke-width="1"/>
+  <line x1="1210" y1="300" x2="1040" y2="945" stroke="#333" stroke-width="1"/>
+
+  <!-- External systems -->
+  <line x1="1180" y1="622" x2="510" y2="120" stroke="#333" stroke-width="1"/>
+  <line x1="1180" y1="702" x2="530" y2="740" stroke="#333" stroke-width="1"/>
+  <line x1="1180" y1="782" x2="520" y2="520" stroke="#333" stroke-width="1"/>
+
+  <!-- ===== Key Relationships ===== -->
+  <!-- Register --include--> Select Role -->
+  <line x1="400" y1="142" x2="400" y2="148" stroke="#333" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow-open)"/>
+  <text x="415" y="148" font-size="9" fill="#555" font-style="italic">«incl.»</text>
+
+  <!-- Compatibility --include--> Breakdown -->
+  <line x1="400" y1="592" x2="400" y2="598" stroke="#333" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow-open)"/>
+  <text x="415" y="598" font-size="9" fill="#555" font-style="italic">«incl.»</text>
+
+</svg>
+</div>
+</body>
+</html>

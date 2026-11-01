@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 1: Use Case Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 1: Identity &amp; Trust</h1>
+<h2>Use Case Diagram (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" width="1100" height="750">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polyline points="0 0, 12 4, 0 8" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="extend-arrow" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polyline points="0 0, 12 4, 0 8" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- System boundary -->
+  <rect x="250" y="30" width="650" height="690" rx="15" fill="#fef9f0" stroke="#e85d04" stroke-width="2"/>
+  <text x="575" y="58" text-anchor="middle" font-size="16" font-weight="bold" fill="#e85d04">DarTounsi — Sprint 1: Identity &amp; Trust</text>
+
+  <!-- ===== Actors ===== -->
+  <!-- Visitor (left) -->
+  <line x1="80" y1="150" x2="80" y2="185" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="140" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="165" x2="100" y2="165" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="185" x2="60" y2="210" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="185" x2="100" y2="210" stroke="#333" stroke-width="2"/>
+  <text x="80" y="228" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Visitor</text>
+
+  <!-- Tenant (left) -->
+  <line x1="80" y1="360" x2="80" y2="395" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="350" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="375" x2="100" y2="375" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="395" x2="60" y2="420" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="395" x2="100" y2="420" stroke="#333" stroke-width="2"/>
+  <text x="80" y="438" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Tenant</text>
+
+  <!-- Owner (left) -->
+  <line x1="80" y1="560" x2="80" y2="595" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="550" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="575" x2="100" y2="575" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="595" x2="60" y2="620" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="595" x2="100" y2="620" stroke="#333" stroke-width="2"/>
+  <text x="80" y="638" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Owner</text>
+
+  <!-- Admin (right) -->
+  <line x1="1020" y1="350" x2="1020" y2="385" stroke="#333" stroke-width="2"/>
+  <circle cx="1020" cy="340" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="1000" y1="365" x2="1040" y2="365" stroke="#333" stroke-width="2"/>
+  <line x1="1020" y1="385" x2="1000" y2="410" stroke="#333" stroke-width="2"/>
+  <line x1="1020" y1="385" x2="1040" y2="410" stroke="#333" stroke-width="2"/>
+  <text x="1020" y="428" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Admin</text>
+
+  <!-- Google OAuth (right, as external system actor) -->
+  <rect x="970" y="120" width="100" height="50" rx="5" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="1020" y="140" text-anchor="middle" font-size="10" fill="#333">«actor»</text>
+  <text x="1020" y="158" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Google API</text>
+
+  <!-- ===== Use Cases ===== -->
+  <!-- UC1: Register with Email -->
+  <ellipse cx="430" cy="110" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="430" y="114" text-anchor="middle" font-size="12" fill="#333">Register with Email</text>
+
+  <!-- UC2: Log in with Google -->
+  <ellipse cx="630" cy="110" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="630" y="114" text-anchor="middle" font-size="12" fill="#333">Log in with Google OAuth</text>
+
+  <!-- UC3: Select Role -->
+  <ellipse cx="530" cy="195" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="530" y="192" text-anchor="middle" font-size="12" fill="#333">Select Role</text>
+  <text x="530" y="206" text-anchor="middle" font-size="10" fill="#888">(Tenant/Owner/Hotel Mgr)</text>
+
+  <!-- UC4: Log in with Email -->
+  <ellipse cx="430" cy="280" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="430" y="284" text-anchor="middle" font-size="12" fill="#333">Log in with Email</text>
+
+  <!-- UC5: View Dashboard -->
+  <ellipse cx="530" cy="370" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="530" y="367" text-anchor="middle" font-size="12" fill="#333">View Bento-Grid</text>
+  <text x="530" y="381" text-anchor="middle" font-size="12" fill="#333">Dashboard</text>
+
+  <!-- UC6: Complete Lifestyle Questionnaire -->
+  <ellipse cx="430" cy="470" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="430" y="467" text-anchor="middle" font-size="12" fill="#333">Complete Lifestyle</text>
+  <text x="430" y="481" text-anchor="middle" font-size="12" fill="#333">Questionnaire</text>
+
+  <!-- UC7: View Verification Badges -->
+  <ellipse cx="430" cy="560" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="430" y="557" text-anchor="middle" font-size="12" fill="#333">View Verification</text>
+  <text x="430" y="571" text-anchor="middle" font-size="12" fill="#333">Badges on Profiles</text>
+
+  <!-- UC8: Manage Profile -->
+  <ellipse cx="650" cy="470" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="650" y="474" text-anchor="middle" font-size="12" fill="#333">Manage Profile</text>
+
+  <!-- UC9: Verify User Account -->
+  <ellipse cx="730" cy="370" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="730" y="367" text-anchor="middle" font-size="12" fill="#333">Verify User</text>
+  <text x="730" y="381" text-anchor="middle" font-size="12" fill="#333">Account</text>
+
+  <!-- UC10: Logout -->
+  <ellipse cx="700" cy="280" rx="100" ry="28" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="284" text-anchor="middle" font-size="12" fill="#333">Logout</text>
+
+  <!-- UC11: Upload Avatar -->
+  <ellipse cx="700" cy="560" rx="110" ry="28" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="564" text-anchor="middle" font-size="12" fill="#333">Upload Avatar</text>
+
+  <!-- UC12: Manage Listings -->
+  <ellipse cx="530" cy="650" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="530" y="647" text-anchor="middle" font-size="12" fill="#333">Manage Own</text>
+  <text x="530" y="661" text-anchor="middle" font-size="12" fill="#333">Listings</text>
+
+  <!-- ===== Associations ===== -->
+  <!-- Visitor -> Register -->
+  <line x1="100" y1="175" x2="310" y2="115" stroke="#333" stroke-width="1.2"/>
+  <!-- Visitor -> Login Google -->
+  <line x1="100" y1="170" x2="510" y2="115" stroke="#333" stroke-width="1.2"/>
+  <!-- Visitor -> Login Email -->
+  <line x1="100" y1="185" x2="310" y2="275" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Tenant -> Dashboard -->
+  <line x1="100" y1="375" x2="410" y2="370" stroke="#333" stroke-width="1.2"/>
+  <!-- Tenant -> Questionnaire -->
+  <line x1="100" y1="395" x2="300" y2="465" stroke="#333" stroke-width="1.2"/>
+  <!-- Tenant -> View Badges -->
+  <line x1="100" y1="400" x2="300" y2="555" stroke="#333" stroke-width="1.2"/>
+  <!-- Tenant -> Manage Profile -->
+  <line x1="100" y1="380" x2="530" y2="468" stroke="#333" stroke-width="1.2"/>
+  <!-- Tenant -> Logout -->
+  <line x1="100" y1="360" x2="600" y2="280" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Owner -> Dashboard -->
+  <line x1="100" y1="570" x2="410" y2="385" stroke="#333" stroke-width="1.2"/>
+  <!-- Owner -> Manage Profile -->
+  <line x1="100" y1="580" x2="530" y2="480" stroke="#333" stroke-width="1.2"/>
+  <!-- Owner -> Manage Listings -->
+  <line x1="100" y1="600" x2="410" y2="645" stroke="#333" stroke-width="1.2"/>
+  <!-- Owner -> Logout -->
+  <line x1="100" y1="565" x2="600" y2="285" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Admin -> Verify User -->
+  <line x1="1000" y1="370" x2="850" y2="370" stroke="#333" stroke-width="1.2"/>
+  <!-- Admin -> Dashboard -->
+  <line x1="1000" y1="360" x2="650" y2="370" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Google -> Login Google -->
+  <line x1="970" y1="145" x2="750" y2="112" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ===== «include» and «extend» relationships ===== -->
+  <!-- Register --include--> Select Role -->
+  <line x1="490" y1="135" x2="510" y2="168" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="520" y="152" font-size="10" fill="#555" font-style="italic">«include»</text>
+
+  <!-- Manage Profile --extend--> Upload Avatar -->
+  <line x1="700" y1="498" x2="700" y2="532" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#extend-arrow)"/>
+  <text x="730" y="518" font-size="10" fill="#555" font-style="italic">«extend»</text>
+
+  <!-- Login Google --include--> Register (for new users) -->
+  <line x1="590" y1="135" x2="475" y2="165" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="490" y="155" font-size="10" fill="#555" font-style="italic">«extend»</text>
+
+</svg>
+</div>
+</body>
+</html>

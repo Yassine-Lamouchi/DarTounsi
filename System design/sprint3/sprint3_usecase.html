@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 3: Use Case Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 3: AI Matchmaking &amp; Payments</h1>
+<h2>Use Case Diagram (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 820" width="1150" height="820">
+  <defs>
+    <marker id="arrow-open" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polyline points="0 0, 12 4, 0 8" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- System boundary -->
+  <rect x="250" y="30" width="680" height="760" rx="15" fill="#fef9f0" stroke="#e85d04" stroke-width="2"/>
+  <text x="590" y="58" text-anchor="middle" font-size="16" font-weight="bold" fill="#e85d04">DarTounsi — Sprint 3: AI Matchmaking &amp; Payments</text>
+
+  <!-- ===== Actors ===== -->
+  <!-- Tenant -->
+  <line x1="80" y1="200" x2="80" y2="235" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="190" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="215" x2="100" y2="215" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="235" x2="60" y2="260" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="235" x2="100" y2="260" stroke="#333" stroke-width="2"/>
+  <text x="80" y="278" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Tenant</text>
+
+  <!-- Owner -->
+  <line x1="80" y1="470" x2="80" y2="505" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="460" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="485" x2="100" y2="485" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="505" x2="60" y2="530" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="505" x2="100" y2="530" stroke="#333" stroke-width="2"/>
+  <text x="80" y="548" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Owner</text>
+
+  <!-- User (generic, left bottom) -->
+  <line x1="80" y1="680" x2="80" y2="715" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="670" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="695" x2="100" y2="695" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="715" x2="60" y2="740" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="715" x2="100" y2="740" stroke="#333" stroke-width="2"/>
+  <text x="80" y="758" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">User</text>
+
+  <!-- Admin (right) -->
+  <line x1="1060" y1="300" x2="1060" y2="335" stroke="#333" stroke-width="2"/>
+  <circle cx="1060" cy="290" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="1040" y1="315" x2="1080" y2="315" stroke="#333" stroke-width="2"/>
+  <line x1="1060" y1="335" x2="1040" y2="360" stroke="#333" stroke-width="2"/>
+  <line x1="1060" y1="335" x2="1080" y2="360" stroke="#333" stroke-width="2"/>
+  <text x="1060" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Admin</text>
+
+  <!-- Konnect Payment (right, external system) -->
+  <rect x="1000" y="500" width="120" height="50" rx="5" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="1060" y="520" text-anchor="middle" font-size="10" fill="#333">«actor»</text>
+  <text x="1060" y="538" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Konnect API</text>
+
+  <!-- SamsarBot (right, internal system) -->
+  <rect x="1000" y="650" width="120" height="50" rx="5" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="1060" y="670" text-anchor="middle" font-size="10" fill="#333">«system»</text>
+  <text x="1060" y="688" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">SamsarBot AI</text>
+
+  <!-- ===== Use Cases ===== -->
+  <!-- UC1: Interact with SamsarBot -->
+  <ellipse cx="450" cy="110" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="107" text-anchor="middle" font-size="12" fill="#333">Interact with</text>
+  <text x="450" y="121" text-anchor="middle" font-size="12" fill="#333">SamsarBot AI Chatbot</text>
+
+  <!-- UC2: View Roommate Compatibility -->
+  <ellipse cx="450" cy="195" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="192" text-anchor="middle" font-size="12" fill="#333">View Roommate</text>
+  <text x="450" y="206" text-anchor="middle" font-size="12" fill="#333">Compatibility Score</text>
+
+  <!-- UC3: View Match Breakdown -->
+  <ellipse cx="450" cy="280" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="277" text-anchor="middle" font-size="12" fill="#333">View Match Score</text>
+  <text x="450" y="291" text-anchor="middle" font-size="12" fill="#333">Breakdown</text>
+
+  <!-- UC4: View Area Safety -->
+  <ellipse cx="700" cy="110" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="107" text-anchor="middle" font-size="12" fill="#333">View Area Safety</text>
+  <text x="700" y="121" text-anchor="middle" font-size="12" fill="#333">Insights</text>
+
+  <!-- UC5: Pay for Premium Listing -->
+  <ellipse cx="450" cy="470" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="467" text-anchor="middle" font-size="12" fill="#333">Pay for Premium</text>
+  <text x="450" y="481" text-anchor="middle" font-size="12" fill="#333">Listing (Konnect)</text>
+
+  <!-- UC6: View Multi-Currency Prices -->
+  <ellipse cx="450" cy="560" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="557" text-anchor="middle" font-size="12" fill="#333">View Prices in</text>
+  <text x="450" y="571" text-anchor="middle" font-size="12" fill="#333">Multiple Currencies</text>
+
+  <!-- UC7: Approve/Reject Listings -->
+  <ellipse cx="700" cy="280" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="277" text-anchor="middle" font-size="12" fill="#333">Review &amp; Approve</text>
+  <text x="700" y="291" text-anchor="middle" font-size="12" fill="#333">New Listings</text>
+
+  <!-- UC8: Manage Users -->
+  <ellipse cx="700" cy="370" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="374" text-anchor="middle" font-size="12" fill="#333">Manage Platform Users</text>
+
+  <!-- UC9: View Admin Dashboard -->
+  <ellipse cx="700" cy="200" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="197" text-anchor="middle" font-size="12" fill="#333">View Admin</text>
+  <text x="700" y="211" text-anchor="middle" font-size="12" fill="#333">Dashboard &amp; Stats</text>
+
+  <!-- UC10: Receive Toast Notifications -->
+  <ellipse cx="450" cy="680" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="677" text-anchor="middle" font-size="12" fill="#333">Receive Toast</text>
+  <text x="450" y="691" text-anchor="middle" font-size="12" fill="#333">Notifications</text>
+
+  <!-- UC11: Resolve Reports -->
+  <ellipse cx="700" cy="460" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="464" text-anchor="middle" font-size="12" fill="#333">Resolve Reports</text>
+
+  <!-- UC12: Generate Keyword Description -->
+  <ellipse cx="450" cy="375" rx="140" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="372" text-anchor="middle" font-size="12" fill="#333">Generate Keyword-Rich</text>
+  <text x="450" y="386" text-anchor="middle" font-size="12" fill="#333">Description (SamsarBot)</text>
+
+  <!-- ===== Associations ===== -->
+  <!-- Tenant to use cases -->
+  <line x1="100" y1="215" x2="310" y2="115" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="220" x2="310" y2="195" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="230" x2="320" y2="280" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Owner to use cases -->
+  <line x1="100" y1="478" x2="310" y2="375" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="485" x2="310" y2="470" stroke="#333" stroke-width="1.2"/>
+
+  <!-- User to generic use cases -->
+  <line x1="100" y1="685" x2="310" y2="560" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="692" x2="310" y2="680" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="678" x2="310" y2="115" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="680" x2="580" y2="115" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Admin to use cases -->
+  <line x1="1040" y1="310" x2="830" y2="280" stroke="#333" stroke-width="1.2"/>
+  <line x1="1040" y1="320" x2="820" y2="370" stroke="#333" stroke-width="1.2"/>
+  <line x1="1040" y1="305" x2="820" y2="200" stroke="#333" stroke-width="1.2"/>
+  <line x1="1040" y1="330" x2="820" y2="460" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Konnect to Pay -->
+  <line x1="1000" y1="525" x2="590" y2="475" stroke="#333" stroke-width="1.2"/>
+
+  <!-- SamsarBot to Chat -->
+  <line x1="1000" y1="675" x2="590" y2="115" stroke="#333" stroke-width="1.2"/>
+  <!-- SamsarBot to Generate Desc -->
+  <line x1="1000" y1="680" x2="590" y2="380" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ===== Relationships ===== -->
+  <!-- Compatibility --include--> Breakdown -->
+  <line x1="450" y1="225" x2="450" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="460" y="240" font-size="10" fill="#555" font-style="italic">«include»</text>
+
+  <!-- Pay Premium --extend--> Konnect payment processing -->
+  <line x1="590" y1="470" x2="700" y2="435" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+
+  <!-- Admin Dashboard --include--> Stats -->
+
+  <!-- SamsarBot Chat --extend--> Generate Desc -->
+  <line x1="450" y1="140" x2="450" y2="345" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="460" y="250" font-size="10" fill="#555" font-style="italic">«extend»</text>
+
+</svg>
+</div>
+</body>
+</html>

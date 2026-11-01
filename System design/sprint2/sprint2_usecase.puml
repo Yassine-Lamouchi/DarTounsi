@@ -1,0 +1,67 @@
+@startuml Sprint2_UseCase
+' ============================================
+' DarTounsi - Sprint 2: Intelligent Discovery
+' Use Case Diagram (UML 2.0)
+' ============================================
+
+left to right direction
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  ArrowColor #333333
+}
+
+rectangle "DarTounsi — Sprint 2: Intelligent Discovery" as System #FEFAF0 {
+
+  usecase "Browse Properties\non Interactive Map" as UC_MAP
+  usecase "Search Housing\nNear University" as UC_UNI
+  usecase "Filter Listings\nby Preferences" as UC_FILTER
+  usecase "View Animated\nProperty Cards" as UC_CARDS
+  usecase "Contact Owner\nvia WhatsApp" as UC_WA
+  usecase "Submit Review\n& Rating" as UC_REVIEW
+  usecase "Toggle\nFavorites" as UC_FAV
+  usecase "View Property\nDetails" as UC_DETAIL
+  usecase "Send Rental\nRequest" as UC_RENT
+  usecase "Manage Incoming\nRental Requests" as UC_MANAGE
+  usecase "Send\nMessages" as UC_MSG
+  usecase "View Similar\nProperties" as UC_SIMILAR
+}
+
+actor "Tenant" as Tenant
+actor "Student" as Student
+actor "Owner" as Owner
+actor "User" as User
+
+' --- Generalizations ---
+Student -u-|> Tenant
+
+' --- Tenant associations ---
+Tenant --> UC_MAP
+Tenant --> UC_UNI
+Tenant --> UC_FILTER
+Tenant --> UC_CARDS
+Tenant --> UC_WA
+Tenant --> UC_RENT
+
+' --- Student-specific ---
+Student --> UC_UNI
+
+' --- Owner ---
+Owner --> UC_MANAGE
+
+' --- Generic User ---
+User --> UC_REVIEW
+User --> UC_FAV
+User --> UC_DETAIL
+User --> UC_MSG
+User --> UC_SIMILAR
+
+' --- Relationships ---
+UC_MAP ..> UC_CARDS : <<include>>
+UC_FILTER ..> UC_CARDS : <<include>>
+UC_DETAIL ..> UC_SIMILAR : <<include>>
+UC_DETAIL <.. UC_WA : <<extend>>
+
+@enduml

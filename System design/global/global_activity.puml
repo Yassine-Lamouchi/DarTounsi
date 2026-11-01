@@ -1,0 +1,249 @@
+@startuml Global_Activity
+' ============================================
+' DarTounsi - Global System
+' Activity Diagram — Complete Platform Workflow (UML 2.0)
+' ============================================
+
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #E85D04
+  ArrowColor #333333
+  DiamondBackgroundColor #FFFFFF
+  DiamondBorderColor #333333
+}
+
+title DarTounsi — Complete Platform Workflow
+
+|#FEFAF0| Visitor / User |
+|#F0F8FF| SPA Frontend |
+|#F0FFF0| Backend (API + DB) |
+|#FCE4EC| Admin |
+|#FFF3E0| External Services |
+
+' ===================================================================
+' SPRINT 1 — IDENTITY & TRUST
+' ===================================================================
+
+|Visitor / User|
+start
+:Access DarTounsi\nPlatform;
+
+if (Has Account?) then (yes)
+  :Click Login;
+
+  |SPA Frontend|
+  :Show Login Form;
+
+  |Visitor / User|
+  :Enter Credentials;
+
+  |Backend (API + DB)|
+  :Verify Credentials\n(bcrypt);
+  :Create PHP Session;
+
+else (no)
+  :Click Register;
+
+  |SPA Frontend|
+  :Show Registration Form;
+
+  |Visitor / User|
+  :Fill Name, Email,\nPassword;
+
+  :Select Role;
+  note right
+    • Tenant
+    • Owner
+    • Hotel Manager
+  end note
+
+  if (Use Google?) then (yes)
+    |External Services|
+    :Google OAuth 2.0\nAuthentication;
+
+    |Backend (API + DB)|
+    :Validate Token\nCreate/Fetch User;
+  else (no)
+    |Backend (API + DB)|
+    :Hash Password\n(bcrypt);
+    :INSERT INTO users;
+  endif
+
+  |Backend (API + DB)|
+  :CREATE matchmaking_profiles\n(default values);
+  :Create PHP Session;
+endif
+
+|SPA Frontend|
+:Route to Role-Based\nBento Dashboard;
+
+|Visitor / User|
+:View Dashboard;
+note right
+  Stats, Recent Activity,
+  Quick Actions
+end note
+
+' ===================================================================
+' ROLE-BASED FORK
+' ===================================================================
+
+fork
+  ' ===== TENANT PATH (Sprint 2) =====
+  |Visitor / User|
+  :Navigate to Search;
+
+  |SPA Frontend|
+  :Show Search with\nFilters & Map;
+
+  |Visitor / User|
+  :Apply Filters;
+  note right
+    City, Type, Price,
+    Bedrooms, Furnished
+  end note
+
+  |Backend (API + DB)|
+  :Query Properties\nSELECT * JOIN users\nWHERE filters;
+  :Apply Pagination\n& Sort;
+
+  |SPA Frontend|
+  :Render 3D Animated\nProperty Cards;
+
+  |Visitor / User|
+  :Browse Property Cards;
+
+  if (Click Card?) then (yes)
+    :Select Property;
+
+    |Backend (API + DB)|
+    :Fetch Details +\nReviews + Safety\n+ Similar;
+    :INCREMENT views_count;
+
+    |SPA Frontend|
+    :Render Detail Page;
+
+    |Visitor / User|
+    :View Full Details;
+
+    switch (Action?)
+      case (Rent)
+        :Send Rental Request;
+
+        |Backend (API + DB)|
+        :INSERT rental_request\n(status: pending);
+        :Notify Owner;
+
+      case (Review ⭐)
+        :Submit Rating\n& Comment;
+
+        |Backend (API + DB)|
+        :INSERT INTO reviews;
+
+      case (Favorite ❤)
+        :Toggle Favorite;
+
+        |Backend (API + DB)|
+        :INSERT/DELETE favorite;
+
+      case (WhatsApp 💬)
+        |SPA Frontend|
+        :Open WhatsApp\nwith Owner's Phone;
+
+    endswitch
+  else (no)
+  endif
+
+fork again
+  ' ===== OWNER PATH (Sprint 3) =====
+  |Visitor / User|
+  :Create Property Listing;
+  note right
+    title, description,
+    type, price, city,
+    images, amenities
+  end note
+
+  |Backend (API + DB)|
+  :Save Property\n(status: **pending**);
+  :Notify All Admins;
+
+  |Admin|
+  :View Pending Dashboard;
+  :Review Listing Details;
+
+  if (Approve?) then (yes)
+    :Approve ✓;
+
+    |Backend (API + DB)|
+    :SET status = 'active';
+    :Notify Owner\n"Approved!";
+  else (no)
+    |Admin|
+    :Reject ✗;
+
+    |Backend (API + DB)|
+    :SET status = 'rejected';
+    :Notify Owner\n"Rejected";
+  endif
+
+end fork
+
+' ===================================================================
+' SPRINT 3 — AI & PAYMENTS
+' ===================================================================
+
+|Visitor / User|
+:🤖 Chat with SamsarBot;
+
+|External Services|
+:SamsarBot Engine\n(Keyword FAQ Matching);
+
+|SPA Frontend|
+:Display Bot Response\nin Chat Bubble;
+
+|Visitor / User|
+:View Roommate Matches;
+
+|Backend (API + DB)|
+:Calculate Compatibility\nScores (92%, 85%...);
+:Return Match Breakdown\n(sleep, noise, pets,\ncleanliness, budget);
+
+|Visitor / User|
+if (Make Premium?) then (yes)
+  :Click "Make Premium";
+
+  |External Services|
+  :Konnect Payment\nGateway;
+
+  if (Payment OK?) then (yes)
+    |Backend (API + DB)|
+    :SET is_premium = true;
+
+    |Visitor / User|
+    #Gold:✨ Premium Listing Active;
+  else (no)
+    |Visitor / User|
+    #LightPink:Payment Failed;
+  endif
+else (no)
+endif
+
+' ===================================================================
+' CROSS-CUTTING FEATURES
+' ===================================================================
+
+|SPA Frontend|
+:Apply User Preferences;
+note right
+  🌙 Dark / Light Theme
+  🌍 EN / FR / AR (RTL)
+  💱 TND / EUR / USD
+end note
+
+|Visitor / User|
+:Platform Active\n& Operational;
+
+stop
+
+@enduml

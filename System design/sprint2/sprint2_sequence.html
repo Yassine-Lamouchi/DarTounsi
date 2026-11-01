@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 2: Sequence Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 2: Intelligent Discovery</h1>
+<h2>Sequence Diagram — Search, Filter &amp; Rental Request Flow (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 980" width="1050" height="980">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-return" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polyline points="0 0, 10 3.5, 0 7" fill="none" stroke="#333" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Lifelines ===== -->
+  <rect x="30" y="30" width="100" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="80" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">:Tenant</text>
+  <line x1="80" y1="65" x2="80" y2="960" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="200" y="30" width="120" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="260" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">:SPA (app.js)</text>
+  <line x1="260" y1="65" x2="260" y2="960" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="420" y="30" width="120" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="480" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">:API (api.php)</text>
+  <line x1="480" y1="65" x2="480" y2="960" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="640" y="30" width="100" height="35" rx="4" fill="#e85d04" stroke="#c44d03" stroke-width="1.5"/>
+  <text x="690" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">:Database</text>
+  <line x1="690" y1="65" x2="690" y2="960" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <rect x="830" y="30" width="100" height="35" rx="4" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="880" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">:Owner</text>
+  <line x1="880" y1="65" x2="880" y2="960" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ===== Fragment 1: Property Search & Filter ===== -->
+  <rect x="20" y="85" width="760" height="260" rx="5" fill="none" stroke="#333" stroke-width="1.5"/>
+  <rect x="20" y="85" width="40" height="22" fill="#ddd" stroke="#333" stroke-width="1.5"/>
+  <text x="40" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">sd</text>
+  <text x="70" y="100" font-size="10" fill="#555">Search &amp; Filter Properties</text>
+
+  <rect x="75" y="110" width="10" height="225" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="255" y="115" width="10" height="215" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="475" y="135" width="10" height="100" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="685" y="145" width="10" height="75" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <!-- 1. Set search filters -->
+  <line x1="85" y1="120" x2="255" y2="120" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="110" y="115" font-size="10" fill="#333">1: setFilters(city, type, price, bedrooms, furnished)</text>
+
+  <!-- 2. Call API -->
+  <line x1="265" y1="140" x2="475" y2="140" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="290" y="135" font-size="10" fill="#333">2: GET route=properties&amp;action=list&amp;filters</text>
+
+  <!-- 3. Query DB -->
+  <line x1="485" y1="150" x2="685" y2="150" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="145" font-size="10" fill="#333">3: SELECT p.*, AVG(rating) WHERE filters</text>
+
+  <!-- 4. Results -->
+  <line x1="685" y1="185" x2="485" y2="185" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="530" y="182" font-size="10" fill="#555">4: properties[] with pagination</text>
+
+  <!-- 5. Join with owner info -->
+  <line x1="485" y1="210" x2="685" y2="210" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="205" font-size="10" fill="#333">5: JOIN users (owner_name, verified badge)</text>
+
+  <line x1="685" y1="220" x2="485" y2="220" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+
+  <!-- 6. Return result -->
+  <line x1="475" y1="240" x2="265" y2="240" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="290" y="237" font-size="10" fill="#555">6: {data: properties[], pagination}</text>
+
+  <!-- 7. Render animated cards -->
+  <line x1="255" y1="270" x2="85" y2="270" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="110" y="267" font-size="10" fill="#555">7: render 3D animated property cards</text>
+
+  <!-- Self call: staggered animation -->
+  <line x1="265" y1="290" x2="310" y2="290" stroke="#333" stroke-width="1"/>
+  <line x1="310" y1="290" x2="310" y2="310" stroke="#333" stroke-width="1"/>
+  <line x1="310" y1="310" x2="265" y2="310" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="315" y="302" font-size="9" fill="#555">8: staggeredEntrance()</text>
+
+  <!-- ===== Fragment 2: View Property + Send Request ===== -->
+  <rect x="20" y="365" width="910" height="380" rx="5" fill="none" stroke="#333" stroke-width="1.5"/>
+  <rect x="20" y="365" width="40" height="22" fill="#ddd" stroke="#333" stroke-width="1.5"/>
+  <text x="40" y="380" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">sd</text>
+  <text x="70" y="380" font-size="10" fill="#555">View Property Details &amp; Send Rental Request</text>
+
+  <rect x="75" y="395" width="10" height="335" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="255" y="400" width="10" height="325" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="475" y="415" width="10" height="155" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="685" y="420" width="10" height="55" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <!-- Click property card -->
+  <line x1="85" y1="405" x2="255" y2="405" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="110" y="400" font-size="10" fill="#333">1: clickPropertyCard(propId)</text>
+
+  <line x1="265" y1="420" x2="475" y2="420" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="290" y="415" font-size="10" fill="#333">2: GET route=properties&amp;action=get&amp;id=X</text>
+
+  <line x1="485" y1="430" x2="685" y2="430" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="425" font-size="10" fill="#333">3: SELECT property + reviews + safety + similar</text>
+
+  <line x1="685" y1="465" x2="485" y2="465" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="530" y="462" font-size="10" fill="#555">4: full property object</text>
+
+  <!-- Increment views -->
+  <line x1="485" y1="485" x2="685" y2="485" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="480" font-size="10" fill="#333">5: UPDATE views_count + 1</text>
+
+  <line x1="475" y1="510" x2="265" y2="510" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="290" y="507" font-size="10" fill="#555">6: {property, reviews, safety, similar[]}</text>
+
+  <line x1="255" y1="535" x2="85" y2="535" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="100" y="532" font-size="10" fill="#555">7: render detail page (images, reviews, WhatsApp btn)</text>
+
+  <!-- opt: Send Rental Request -->
+  <rect x="40" y="555" width="880" height="175" rx="4" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="40" y="555" width="70" height="20" fill="#eee" stroke="#555" stroke-width="1"/>
+  <text x="75" y="569" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">opt</text>
+  <text x="120" y="569" font-size="10" fill="#555">[user wants to rent]</text>
+
+  <rect x="475" y="580" width="10" height="130" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="685" y="595" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="875" y="660" width="10" height="50" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+
+  <line x1="85" y1="580" x2="255" y2="580" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="100" y="575" font-size="10" fill="#333">8: click "Request to Rent"</text>
+
+  <line x1="265" y1="590" x2="475" y2="590" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="290" y="585" font-size="10" fill="#333">9: POST route=rentals&amp;action=request</text>
+
+  <line x1="485" y1="600" x2="685" y2="600" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="595" font-size="10" fill="#333">10: INSERT rental_requests</text>
+
+  <line x1="685" y1="625" x2="485" y2="625" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="530" y="622" font-size="10" fill="#555">11: success</text>
+
+  <!-- Notify owner -->
+  <line x1="485" y1="645" x2="685" y2="645" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="642" font-size="10" fill="#333">12: INSERT notification (owner)</text>
+
+  <line x1="485" y1="665" x2="875" y2="665" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="620" y="660" font-size="10" fill="#333">13: notify: "New Rental Request"</text>
+
+  <line x1="475" y1="690" x2="265" y2="690" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="290" y="687" font-size="10" fill="#555">14: {message: "Request sent"}</text>
+
+  <line x1="255" y1="710" x2="85" y2="710" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="100" y="707" font-size="10" fill="#555">15: showToast("Request sent!")</text>
+
+  <!-- ===== Fragment 3: Review & Rating ===== -->
+  <rect x="20" y="765" width="760" height="180" rx="5" fill="none" stroke="#333" stroke-width="1.5"/>
+  <rect x="20" y="765" width="40" height="22" fill="#ddd" stroke="#333" stroke-width="1.5"/>
+  <text x="40" y="780" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">sd</text>
+  <text x="70" y="780" font-size="10" fill="#555">Submit Review &amp; Rating</text>
+
+  <rect x="75" y="795" width="10" height="135" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="255" y="800" width="10" height="125" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="475" y="815" width="10" height="85" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+  <rect x="685" y="825" width="10" height="50" fill="#ffe0b2" stroke="#e85d04" stroke-width="1"/>
+
+  <line x1="85" y1="805" x2="255" y2="805" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="100" y="800" font-size="10" fill="#333">1: submitReview(propId, rating, comment)</text>
+
+  <line x1="265" y1="820" x2="475" y2="820" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="290" y="815" font-size="10" fill="#333">2: POST route=reviews&amp;action=create</text>
+
+  <line x1="485" y1="830" x2="685" y2="830" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="825" font-size="10" fill="#333">3: INSERT INTO reviews</text>
+
+  <line x1="685" y1="860" x2="485" y2="860" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="550" y="857" font-size="10" fill="#555">4: success</text>
+
+  <!-- Notify owner of review -->
+  <line x1="485" y1="880" x2="685" y2="880" stroke="#333" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="510" y="877" font-size="10" fill="#333">5: notify(owner, "New Review")</text>
+
+  <line x1="475" y1="900" x2="265" y2="900" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="310" y="897" font-size="10" fill="#555">6: {message: "Review submitted"}</text>
+
+  <line x1="255" y1="920" x2="85" y2="920" stroke="#333" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow-return)"/>
+  <text x="100" y="917" font-size="10" fill="#555">7: update review section in UI</text>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+@startuml Sprint1_Sequence
+' ============================================
+' DarTounsi - Sprint 1: Identity & Trust
+' Sequence Diagram (UML 2.0)
+' ============================================
+
+skinparam participant {
+  BackgroundColor #E85D04
+  FontColor #FFFFFF
+  BorderColor #C44D03
+}
+skinparam sequence {
+  ArrowColor #333333
+  LifeLineBorderColor #333333
+  LifeLineBackgroundColor #FFE0B2
+}
+
+actor ":Visitor" as Visitor
+participant ":SPA\n(app.js)" as SPA
+participant ":API\n(api.php)" as API
+database ":Database" as DB
+participant ":Google API" as Google #2E7D32
+
+== Email Registration ==
+
+group sd Registration Flow
+  Visitor -> SPA : 1: fillForm(name, email, password)
+  activate SPA
+
+  SPA -> SPA : 2: selectRole(tenant|owner|hotel_manager)
+
+  SPA -> API : 3: POST route=auth&action=register\n{name, email, password, role}
+  activate API
+
+  API -> DB : 4: SELECT * FROM users WHERE email = ?
+  activate DB
+  DB --> API : 5: null (no duplicate)
+  deactivate DB
+
+  API -> DB : 6: INSERT INTO users\n(password_hash = bcrypt)
+  activate DB
+  DB --> API : 7: user record (id, name, role)
+  deactivate DB
+
+  API -> DB : 8: INSERT INTO matchmaking_profiles\n(default values)
+  activate DB
+  DB --> API : 9: success
+  deactivate DB
+
+  API -> API : 10: $_SESSION['user_id'] = user.id
+
+  API --> SPA : 11: {success: true, user: {id, name, role}}
+  deactivate API
+
+  SPA --> Visitor : 12: navigate → Dashboard (#/dashboard)
+  deactivate SPA
+end
+
+== Google OAuth ==
+
+group sd Google OAuth Flow
+  Visitor -> SPA : 1: click "Sign in with Google"
+  activate SPA
+
+  SPA -> Google : 2: initiate OAuth 2.0 flow
+  activate Google
+  Google --> SPA : 3: {google_id, name, email, avatar_url}
+  deactivate Google
+
+  SPA -> API : 4: POST route=auth&action=google-auth\n{google_id, name, email, avatar}
+  activate API
+
+  API -> DB : 5: SELECT * FROM users\nWHERE google_id = ? OR email = ?
+  activate DB
+  DB --> API : 6: result
+  deactivate DB
+
+  alt #LightGreen User exists
+    API -> API : 7a: Login existing user\nUpdate google_id if needed
+  else #LightYellow New user
+    API -> DB : 7b: INSERT INTO users\n(google_id, no password required)
+    activate DB
+    DB --> API : 8: new user record
+    deactivate DB
+  end
+
+  API -> API : 9: Create session
+
+  API --> SPA : 10: {success: true, user: {...}}
+  deactivate API
+
+  SPA --> Visitor : 11: navigate → Dashboard
+  deactivate SPA
+end
+
+== Lifestyle Questionnaire ==
+
+group sd Questionnaire Onboarding
+  Visitor -> SPA : 1: navigate to questionnaire
+  activate SPA
+
+  SPA --> Visitor : 2: render interactive form\n(sleep, noise, smoking, pets,\ncleanliness, guests, budget, location)
+
+  Visitor -> SPA : 3: submitPreferences(data)
+
+  SPA -> API : 4: POST route=matchmaking\n&action=save-profile
+  activate API
+
+  API -> DB : 5: INSERT/UPDATE\nmatchmaking_profiles
+  activate DB
+  DB --> API : 6: success
+  deactivate DB
+
+  API --> SPA : 7: {success: true}
+  deactivate API
+
+  SPA --> Visitor : 8: showBadge("Profile Complete ✓")
+  deactivate SPA
+end
+
+@enduml

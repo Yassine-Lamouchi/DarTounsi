@@ -1,0 +1,150 @@
+@startuml Sprint1_Class
+' ============================================
+' DarTounsi - Sprint 1: Identity & Trust
+' Class Diagram (UML 2.0)
+' ============================================
+
+skinparam class {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  HeaderBackgroundColor #E85D04
+  FontColor #333333
+  ArrowColor #333333
+}
+skinparam stereotypeCBackgroundColor #F0FFF0
+
+class User {
+  - id : int <<PK>>
+  - name : varchar(100)
+  - email : varchar(150) <<unique>>
+  - password_hash : varchar(255)
+  - avatar_url : varchar(500)
+  - banner_url : varchar(500)
+  - description : text
+  - location : varchar(200)
+  - role : UserRole
+  - google_id : varchar(100)
+  - phone : varchar(20)
+  - is_verified : boolean
+  - lifestyle_prefs : JSON
+  - created_at : datetime
+  - updated_at : datetime
+  __
+  + register(name, email, password, role) : User
+  + login(email, password) : User
+  + updateProfile(fields) : void
+  + verifyAccount() : void
+  + isSuperAdmin() : boolean
+  + isAdminOrSuper() : boolean
+}
+
+class Property {
+  - id : int <<PK>>
+  - owner_id : int <<FK → User>>
+  - title : varchar(200)
+  - description : text
+  - type : PropertyType
+  - price : decimal(10,2)
+  - currency : varchar(3) = 'TND'
+  - city : varchar(50)
+  - neighborhood : varchar(100)
+  - address : varchar(255)
+  - lat : decimal(10,7)
+  - lng : decimal(10,7)
+  - bedrooms : int
+  - bathrooms : int
+  - area_sqm : int
+  - amenities : JSON
+  - images : JSON
+  - is_furnished : boolean
+  - is_premium : boolean
+  - status : PropertyStatus
+  - views_count : int
+  - created_at : datetime
+  __
+  + list(filters) : Property[]
+  + get(id) : Property
+  + create() : void
+  + update() : void
+  + delete() : void
+}
+
+class MatchmakingProfile {
+  - id : int <<PK>>
+  - user_id : int <<FK, unique>>
+  - sleep_schedule : enum {early_bird, night_owl, flexible}
+  - noise_level : enum {quiet, moderate, social}
+  - is_smoker : boolean
+  - pets_allowed : boolean
+  - cleanliness : enum {very_clean, moderate, relaxed}
+  - guest_policy : enum {never, sometimes, often}
+  - budget_min : decimal(10,2)
+  - budget_max : decimal(10,2)
+  - preferred_city : varchar(50)
+  - preferred_neighborhood : varchar(100)
+  - bio : text
+  __
+  + save(data) : void
+  + getProfile(userId) : MatchmakingProfile
+}
+
+class Notification {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - type : varchar(50)
+  - title : varchar(200)
+  - message : text
+  - link : varchar(255)
+  - is_read : boolean = false
+  - created_at : datetime
+  __
+  + notify(userId, type, title, msg, link) : void
+  + markRead(id) : void
+  + markAllRead(userId) : void
+  + getCount(userId) : int
+}
+
+class AuthController <<controller>> #F0FFF0 {
+  + authLogin(email, password) : User
+  + authRegister(name, email, pwd, role) : User
+  + authGoogle(googlePayload) : User
+  + authSession() : User
+  + authLogout() : void
+  + auth() : int {userId}
+  + requireRole(roles[]) : int {userId}
+}
+
+enum UserRole {
+  tenant
+  owner
+  hotel_manager
+  admin
+  super_admin
+}
+
+enum PropertyType {
+  apartment
+  house
+  studio
+  room
+  hotel_room
+}
+
+enum PropertyStatus {
+  pending
+  active
+  rejected
+  rented
+  archived
+}
+
+' --- Relationships ---
+User "1" *-d- "0..*" Property : owns >
+User "1" *-d- "0..1" MatchmakingProfile
+User "1" *-d- "0..*" Notification
+User ..> UserRole
+Property ..> PropertyType
+Property ..> PropertyStatus
+AuthController ..> User : <<use>>
+
+@enduml

@@ -1,0 +1,130 @@
+@startuml Sprint2_Sequence
+' ============================================
+' DarTounsi - Sprint 2: Intelligent Discovery
+' Sequence Diagram (UML 2.0)
+' ============================================
+
+skinparam participant {
+  BackgroundColor #E85D04
+  FontColor #FFFFFF
+  BorderColor #C44D03
+}
+skinparam sequence {
+  ArrowColor #333333
+  LifeLineBorderColor #333333
+  LifeLineBackgroundColor #FFE0B2
+}
+
+actor ":Tenant" as Tenant
+participant ":SPA\n(app.js)" as SPA
+participant ":API\n(api.php)" as API
+database ":Database" as DB
+actor ":Owner" as Owner #2E7D32
+
+== Search & Filter Properties ==
+
+group sd Search & Filter Properties
+  Tenant -> SPA : 1: setFilters(city, type,\nprice, bedrooms, furnished)
+  activate SPA
+
+  SPA -> API : 2: GET route=properties\n&action=list&filters
+  activate API
+
+  API -> DB : 3: SELECT p.*, AVG(r.rating)\nFROM properties p\nLEFT JOIN reviews r\nWHERE filters
+  activate DB
+
+  DB --> API : 4: properties[] with pagination
+  deactivate DB
+
+  API -> DB : 5: JOIN users\n(owner_name, verified badge)
+  activate DB
+  DB --> API : 6: enriched results
+  deactivate DB
+
+  API --> SPA : 7: {data: properties[], pagination}
+  deactivate API
+
+  SPA --> Tenant : 8: render 3D animated property cards
+  SPA -> SPA : 9: staggeredEntrance()\nanimation
+  deactivate SPA
+end
+
+== View Property Details & Send Rental Request ==
+
+group sd View Property Details & Rental Request
+  Tenant -> SPA : 1: clickPropertyCard(propId)
+  activate SPA
+
+  SPA -> API : 2: GET route=properties\n&action=get&id=X
+  activate API
+
+  API -> DB : 3: SELECT property\n+ reviews + area_safety\n+ similar properties
+  activate DB
+  DB --> API : 4: full property object
+  deactivate DB
+
+  API -> DB : 5: UPDATE properties\nSET views_count = views_count + 1
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API --> SPA : 6: {property, reviews[],\nsafety, similar[]}
+  deactivate API
+
+  SPA --> Tenant : 7: render detail page\n(images, reviews, WhatsApp btn)
+  deactivate SPA
+
+  opt User wants to rent
+    Tenant -> SPA : 8: click "Request to Rent"
+    activate SPA
+
+    SPA -> API : 9: POST route=rentals\n&action=request\n{propId, message}
+    activate API
+
+    API -> DB : 10: INSERT INTO\nrental_requests
+    activate DB
+    DB --> API : 11: success
+    deactivate DB
+
+    API -> DB : 12: INSERT INTO notifications\n(owner_id, "New Rental Request")
+    activate DB
+    DB --> API
+    deactivate DB
+
+    API -> Owner : 13: notify:\n"New Rental Request"
+
+    API --> SPA : 14: {message: "Request sent"}
+    deactivate API
+
+    SPA --> Tenant : 15: showToast("Request sent! ✓")
+    deactivate SPA
+  end
+end
+
+== Submit Review & Rating ==
+
+group sd Submit Review & Rating
+  Tenant -> SPA : 1: submitReview(propId,\nrating, comment)
+  activate SPA
+
+  SPA -> API : 2: POST route=reviews\n&action=create\n{propId, rating, comment}
+  activate API
+
+  API -> DB : 3: INSERT INTO reviews\n(user_id, property_id,\nrating, comment)
+  activate DB
+  DB --> API : 4: success
+  deactivate DB
+
+  API -> DB : 5: INSERT notification\n(owner, "New Review ⭐")
+  activate DB
+  DB --> API
+  deactivate DB
+
+  API --> SPA : 6: {message: "Review submitted"}
+  deactivate API
+
+  SPA --> Tenant : 7: update review section in UI
+  deactivate SPA
+end
+
+@enduml

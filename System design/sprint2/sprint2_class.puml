@@ -1,0 +1,138 @@
+@startuml Sprint2_Class
+' ============================================
+' DarTounsi - Sprint 2: Intelligent Discovery
+' Class Diagram (UML 2.0)
+' ============================================
+
+skinparam class {
+  BackgroundColor #FFF8F0
+  BorderColor #E85D04
+  HeaderBackgroundColor #E85D04
+  FontColor #333333
+  ArrowColor #333333
+}
+
+class Property {
+  - id : int <<PK>>
+  - owner_id : int <<FK → User>>
+  - title : varchar(200)
+  - description : text
+  - type : PropertyType
+  - price : decimal(10,2)
+  - currency : varchar(3) = 'TND'
+  - city : varchar(50)
+  - neighborhood : varchar(100)
+  - address : varchar(255)
+  - lat : decimal(10,7)
+  - lng : decimal(10,7)
+  - bedrooms : int
+  - bathrooms : int
+  - area_sqm : int
+  - amenities : JSON
+  - images : JSON
+  - is_furnished : boolean
+  - is_premium : boolean
+  - status : PropertyStatus
+  - views_count : int
+  - created_at : datetime
+  __
+  + list(filters) : Property[]
+  + get(id) : Property
+  + getMyProperties() : Property[]
+  + getFeatured() : Property[]
+}
+
+class Review {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - rating : int {1..5}
+  - comment : text
+  - created_at : datetime
+  __
+  + create(userId, propId, rating, comment) : void
+  + listByProperty(propId) : Review[]
+  + getAvgRating(propId) : float
+}
+
+class Favorite {
+  - id : int <<PK>>
+  - user_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - created_at : datetime
+  __
+  + toggle(userId, propId) : boolean
+  + listByUser(userId) : Property[]
+  ..
+  <<constraint>> UNIQUE(user_id, property_id)
+}
+
+class RentalRequest {
+  - id : int <<PK>>
+  - tenant_id : int <<FK → User>>
+  - property_id : int <<FK → Property>>
+  - owner_id : int <<FK → User>>
+  - status : enum {pending, accepted, rejected}
+  - message : text
+  - created_at : datetime
+  __
+  + request(tenantId, propId, msg) : void
+  + accept(reqId) : void
+  + reject(reqId) : void
+  + myRequests(tenantId) : RentalRequest[]
+  + incoming(ownerId) : RentalRequest[]
+}
+
+class Message {
+  - id : int <<PK>>
+  - sender_id : int <<FK → User>>
+  - receiver_id : int <<FK → User>>
+  - property_id : int <<FK → Property>> {nullable}
+  - content : text
+  - is_read : boolean = false
+  - created_at : datetime
+  __
+  + send(senderId, receiverId, content) : void
+  + getThread(userId, otherId) : Message[]
+  + getConversations(userId) : Conversation[]
+}
+
+class User {
+  - id : int <<PK>>
+  - name : varchar(100)
+  - phone : varchar(20)
+  - is_verified : boolean
+  __
+  + getWhatsAppLink() : string
+}
+
+enum PropertyType {
+  apartment
+  house
+  studio
+  room
+  hotel_room
+}
+
+enum PropertyStatus {
+  pending
+  active
+  rejected
+  rented
+  archived
+}
+
+' --- Relationships ---
+User "1" *-r- "0..*" Property : owns >
+Property "1" *-d- "0..*" Review
+Property "1" *-d- "0..*" Favorite
+Property "1" *-d- "0..*" RentalRequest
+Property "0..1" -d- "0..*" Message
+User "1" -d- "0..*" Review : writes >
+User "1" -d- "0..*" Favorite
+User "1" -d- "0..*" Message : sender/receiver
+
+Property ..> PropertyType
+Property ..> PropertyStatus
+
+@enduml

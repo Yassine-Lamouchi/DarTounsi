@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Global: Activity Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Global System</h1>
+<h2>Activity Diagram — Complete Platform Workflow (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1400" width="1100" height="1400">
+
+  <!-- Swimlanes -->
+  <rect x="30" y="40" width="230" height="1330" fill="#fef9f0" stroke="#e85d04" stroke-width="1.5" rx="5"/>
+  <text x="145" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#e85d04">Visitor / User</text>
+
+  <rect x="260" y="40" width="230" height="1330" fill="#f0f8ff" stroke="#4a90d9" stroke-width="1.5" rx="5"/>
+  <text x="375" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a90d9">SPA Frontend</text>
+
+  <rect x="490" y="40" width="230" height="1330" fill="#f0fff0" stroke="#2e7d32" stroke-width="1.5" rx="5"/>
+  <text x="605" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">Backend / Database</text>
+
+  <rect x="720" y="40" width="180" height="1330" fill="#fce4ec" stroke="#c62828" stroke-width="1.5" rx="5"/>
+  <text x="810" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#c62828">Admin</text>
+
+  <rect x="900" y="40" width="170" height="1330" fill="#fff3e0" stroke="#e65100" stroke-width="1.5" rx="5"/>
+  <text x="985" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">External Services</text>
+
+  <!-- ===== INITIAL NODE ===== -->
+  <circle cx="145" cy="100" r="10" fill="#333"/>
+  <line x1="145" y1="110" x2="145" y2="128" stroke="#333" stroke-width="1.5"/>
+  <polygon points="140,128 145,138 150,128" fill="#333"/>
+
+  <!-- Open Platform -->
+  <rect x="70" y="138" width="150" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="145" y="158" text-anchor="middle" font-size="10" fill="#333">Access DarTounsi</text>
+
+  <!-- Decision: Registered? -->
+  <line x1="145" y1="170" x2="145" y2="188" stroke="#333" stroke-width="1.5"/>
+  <polygon points="140,188 145,198 150,188" fill="#333"/>
+  <polygon points="145,200 180,220 145,240 110,220" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="145" y="224" text-anchor="middle" font-size="9" fill="#333">Acct?</text>
+
+  <!-- ===== SPRINT 1: REGISTRATION ===== -->
+  <!-- No → Register -->
+  <line x1="110" y1="220" x2="60" y2="220" stroke="#333" stroke-width="1.5"/>
+  <text x="70" y="213" font-size="8" fill="#555">[No]</text>
+  <line x1="60" y1="220" x2="60" y2="265" stroke="#333" stroke-width="1.5"/>
+  <polygon points="55,265 60,275 65,265" fill="#333"/>
+
+  <!-- Register -->
+  <rect x="40" y="275" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="288" text-anchor="middle" font-size="10" fill="#333">Register</text>
+  <text x="105" y="300" text-anchor="middle" font-size="9" fill="#888">(Email or Google)</text>
+
+  <!-- Select Role -->
+  <line x1="105" y1="307" x2="105" y2="322" stroke="#333" stroke-width="1.5"/>
+  <polygon points="100,322 105,332 110,322" fill="#333"/>
+  <rect x="40" y="332" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="345" text-anchor="middle" font-size="10" fill="#333">Select Role</text>
+  <text x="105" y="357" text-anchor="middle" font-size="9" fill="#888">(Tenant/Owner/Hotel)</text>
+
+  <!-- To backend -->
+  <line x1="170" y1="348" x2="530" y2="348" stroke="#333" stroke-width="1.5"/>
+  <polygon points="530,343 540,348 530,353" fill="#333"/>
+
+  <rect x="530" y="332" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="345" text-anchor="middle" font-size="10" fill="#333">Create User +</text>
+  <text x="605" y="357" text-anchor="middle" font-size="10" fill="#333">Session + Notify</text>
+
+  <!-- Yes → Login -->
+  <line x1="180" y1="220" x2="210" y2="220" stroke="#333" stroke-width="1.5"/>
+  <text x="190" y="213" font-size="8" fill="#555">[Yes]</text>
+  <line x1="210" y1="220" x2="210" y2="310" stroke="#333" stroke-width="1.5"/>
+  <line x1="210" y1="310" x2="290" y2="310" stroke="#333" stroke-width="1.5"/>
+  <polygon points="290,305 300,310 290,315" fill="#333"/>
+
+  <rect x="290" y="294" width="150" height="32" rx="16" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="365" y="314" text-anchor="middle" font-size="10" fill="#333">Login (Email/Google)</text>
+
+  <line x1="440" y1="310" x2="530" y2="348" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Merge after register/login -->
+  <line x1="605" y1="364" x2="605" y2="385" stroke="#333" stroke-width="1.5"/>
+  <line x1="605" y1="385" x2="375" y2="385" stroke="#333" stroke-width="1.5"/>
+  <polygon points="375,380 365,385 375,390" fill="#333"/>
+
+  <!-- Dashboard -->
+  <rect x="290" y="375" width="150" height="32" rx="16" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="365" y="395" text-anchor="middle" font-size="10" fill="#333">Render Dashboard</text>
+
+  <line x1="290" y1="391" x2="220" y2="391" stroke="#333" stroke-width="1.5"/>
+  <polygon points="220,386 210,391 220,396" fill="#333"/>
+
+  <rect x="55" y="380" width="155" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="133" y="400" text-anchor="middle" font-size="10" fill="#333">View Bento Dashboard</text>
+
+  <!-- Decision: Role-based fork -->
+  <line x1="145" y1="412" x2="145" y2="435" stroke="#333" stroke-width="1.5"/>
+  <polygon points="140,435 145,445 150,435" fill="#333"/>
+
+  <!-- Fork bar (UML 2.0) -->
+  <rect x="55" y="447" width="180" height="5" rx="2" fill="#333"/>
+
+  <!-- ===== SPRINT 2: DISCOVERY (Tenant path) ===== -->
+  <line x1="100" y1="452" x2="100" y2="475" stroke="#333" stroke-width="1.5"/>
+  <polygon points="95,475 100,485 105,475" fill="#333"/>
+
+  <rect x="40" y="485" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="498" text-anchor="middle" font-size="10" fill="#333">Search Properties</text>
+  <text x="105" y="510" text-anchor="middle" font-size="9" fill="#888">(Filters, Map)</text>
+
+  <line x1="170" y1="501" x2="290" y2="501" stroke="#333" stroke-width="1.5"/>
+  <polygon points="290,496 300,501 290,506" fill="#333"/>
+
+  <rect x="290" y="485" width="150" height="32" rx="16" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="365" y="505" text-anchor="middle" font-size="10" fill="#333">Animated 3D Cards</text>
+
+  <line x1="440" y1="501" x2="530" y2="501" stroke="#333" stroke-width="1.5"/>
+  <polygon points="530,496 540,501 530,506" fill="#333"/>
+
+  <rect x="530" y="485" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="505" text-anchor="middle" font-size="10" fill="#333">Query + Paginate</text>
+
+  <!-- View detail & rent -->
+  <line x1="105" y1="517" x2="105" y2="540" stroke="#333" stroke-width="1.5"/>
+  <polygon points="100,540 105,550 110,540" fill="#333"/>
+
+  <rect x="40" y="550" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="563" text-anchor="middle" font-size="10" fill="#333">View Property</text>
+  <text x="105" y="575" text-anchor="middle" font-size="10" fill="#333">Details</text>
+
+  <!-- Decision: Action? -->
+  <line x1="105" y1="582" x2="105" y2="600" stroke="#333" stroke-width="1.5"/>
+  <polygon points="100,600 105,610 110,600" fill="#333"/>
+  <polygon points="105,612 140,632 105,652 70,632" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="105" y="636" text-anchor="middle" font-size="8" fill="#333">Action?</text>
+
+  <!-- Rent -->
+  <line x1="105" y1="652" x2="105" y2="672" stroke="#333" stroke-width="1.5"/>
+  <text x="115" y="668" font-size="8" fill="#555">[Rent]</text>
+  <rect x="40" y="672" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="105" y="692" text-anchor="middle" font-size="10" fill="#333">Send Rental Request</text>
+
+  <line x1="170" y1="688" x2="530" y2="688" stroke="#333" stroke-width="1.5"/>
+  <polygon points="530,683 540,688 530,693" fill="#333"/>
+  <rect x="530" y="672" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="685" text-anchor="middle" font-size="10" fill="#333">INSERT request +</text>
+  <text x="605" y="697" text-anchor="middle" font-size="10" fill="#333">Notify Owner</text>
+
+  <!-- Review -->
+  <line x1="70" y1="632" x2="40" y2="632" stroke="#333" stroke-width="1.5"/>
+  <text x="42" y="625" font-size="8" fill="#555">[Review]</text>
+  <line x1="40" y1="632" x2="40" y2="730" stroke="#333" stroke-width="1.5"/>
+  <rect x="40" y="730" width="130" height="26" rx="13" fill="#fff" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="105" y="747" text-anchor="middle" font-size="9" fill="#333">Submit Review ⭐</text>
+
+  <!-- Fav -->
+  <line x1="140" y1="632" x2="165" y2="632" stroke="#333" stroke-width="1.5"/>
+  <text x="150" y="625" font-size="8" fill="#555">[Fav]</text>
+  <line x1="165" y1="632" x2="165" y2="730" stroke="#333" stroke-width="1.5"/>
+  <rect x="130" y="730" width="100" height="26" rx="13" fill="#fff" stroke="#e85d04" stroke-width="1.2"/>
+  <text x="180" y="747" text-anchor="middle" font-size="9" fill="#333">Toggle ❤ Fav</text>
+
+  <!-- ===== OWNER PATH ===== -->
+  <line x1="190" y1="452" x2="190" y2="475" stroke="#333" stroke-width="1.5"/>
+  <polygon points="185,475 190,485 195,475" fill="#333"/>
+
+  <rect x="130" y="790" width="130" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="195" y="803" text-anchor="middle" font-size="10" fill="#333">Create Listing</text>
+  <text x="195" y="815" text-anchor="middle" font-size="9" fill="#888">(status: pending)</text>
+
+  <line x1="190" y1="475" x2="190" y2="790" stroke="#333" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <line x1="260" y1="806" x2="530" y2="806" stroke="#333" stroke-width="1.5"/>
+  <polygon points="530,801 540,806 530,811" fill="#333"/>
+
+  <rect x="530" y="790" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="803" text-anchor="middle" font-size="10" fill="#333">Save Property</text>
+  <text x="605" y="815" text-anchor="middle" font-size="10" fill="#333">(pending)</text>
+
+  <!-- Notify admin -->
+  <line x1="680" y1="806" x2="750" y2="806" stroke="#333" stroke-width="1.5"/>
+  <polygon points="750,801 760,806 750,811" fill="#333"/>
+
+  <rect x="740" y="790" width="140" height="32" rx="16" fill="#fff" stroke="#c62828" stroke-width="1.5"/>
+  <text x="810" y="803" text-anchor="middle" font-size="10" fill="#333">📋 Review Listing</text>
+  <text x="810" y="815" text-anchor="middle" font-size="10" fill="#333">Pending</text>
+
+  <!-- Admin decision -->
+  <line x1="810" y1="822" x2="810" y2="845" stroke="#333" stroke-width="1.5"/>
+  <polygon points="805,845 810,855 815,845" fill="#333"/>
+  <polygon points="810,857 845,877 810,897 775,877" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="810" y="881" text-anchor="middle" font-size="9" fill="#333">OK?</text>
+
+  <!-- Approve -->
+  <line x1="810" y1="897" x2="810" y2="918" stroke="#333" stroke-width="1.5"/>
+  <text x="825" y="912" font-size="8" fill="#555">[Yes]</text>
+  <rect x="740" y="918" width="140" height="32" rx="16" fill="#fff" stroke="#c62828" stroke-width="1.5"/>
+  <text x="810" y="938" text-anchor="middle" font-size="10" fill="#333">Approve ✓</text>
+
+  <line x1="740" y1="934" x2="680" y2="934" stroke="#333" stroke-width="1.5"/>
+  <polygon points="680,929 670,934 680,939" fill="#333"/>
+
+  <rect x="530" y="918" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="931" text-anchor="middle" font-size="10" fill="#333">SET status='active'</text>
+  <text x="605" y="943" text-anchor="middle" font-size="10" fill="#333">+ Notify Owner</text>
+
+  <!-- Reject path -->
+  <line x1="845" y1="877" x2="880" y2="877" stroke="#333" stroke-width="1.5"/>
+  <text x="855" y="870" font-size="8" fill="#555">[No]</text>
+  <rect x="850" y="862" width="100" height="26" rx="13" fill="#fce4ec" stroke="#c62828" stroke-width="1"/>
+  <text x="900" y="879" text-anchor="middle" font-size="9" fill="#c62828">Reject ✗</text>
+
+  <!-- ===== SPRINT 3: AI ===== -->
+  <!-- SamsarBot (always available) -->
+  <line x1="145" y1="770" x2="145" y2="780" stroke="#333" stroke-width="1"/>
+
+  <!-- Matchmaking section -->
+  <rect x="55" y="970" width="155" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="133" y="983" text-anchor="middle" font-size="10" fill="#333">🤖 Chat SamsarBot</text>
+  <text x="133" y="995" text-anchor="middle" font-size="9" fill="#888">(Keyword FAQ AI)</text>
+
+  <!-- to SamsarBot service -->
+  <line x1="210" y1="986" x2="930" y2="986" stroke="#333" stroke-width="1.5"/>
+  <polygon points="930,981 940,986 930,991" fill="#333"/>
+  <rect x="920" y="970" width="140" height="32" rx="16" fill="#fff" stroke="#e65100" stroke-width="1.5"/>
+  <text x="990" y="990" text-anchor="middle" font-size="10" fill="#333">SamsarBot Engine</text>
+
+  <!-- Matchmaking -->
+  <rect x="55" y="1030" width="155" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="133" y="1043" text-anchor="middle" font-size="10" fill="#333">View Roommate</text>
+  <text x="133" y="1055" text-anchor="middle" font-size="10" fill="#333">Matches</text>
+
+  <line x1="133" y1="1002" x2="133" y2="1030" stroke="#333" stroke-width="1.5"/>
+  <polygon points="128,1030 133,1040 138,1030" fill="#333"/>
+
+  <line x1="210" y1="1046" x2="530" y2="1046" stroke="#333" stroke-width="1.5"/>
+  <polygon points="530,1041 540,1046 530,1051" fill="#333"/>
+
+  <rect x="530" y="1030" width="150" height="32" rx="16" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="1043" text-anchor="middle" font-size="10" fill="#333">Calculate Scores</text>
+  <text x="605" y="1055" text-anchor="middle" font-size="10" fill="#333">(92%, 85%...)</text>
+
+  <!-- Premium Payment -->
+  <rect x="55" y="1090" width="155" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="133" y="1103" text-anchor="middle" font-size="10" fill="#333">🔑 Make Premium</text>
+  <text x="133" y="1115" text-anchor="middle" font-size="9" fill="#888">(Konnect Payment)</text>
+
+  <line x1="133" y1="1062" x2="133" y2="1090" stroke="#333" stroke-width="1.5"/>
+  <polygon points="128,1090 133,1100 138,1090" fill="#333"/>
+
+  <line x1="210" y1="1106" x2="930" y2="1106" stroke="#333" stroke-width="1.5"/>
+  <polygon points="930,1101 940,1106 930,1111" fill="#333"/>
+  <rect x="920" y="1090" width="140" height="32" rx="16" fill="#fff" stroke="#e65100" stroke-width="1.5"/>
+  <text x="990" y="1103" text-anchor="middle" font-size="10" fill="#333">Konnect Gateway</text>
+  <text x="990" y="1115" text-anchor="middle" font-size="10" fill="#333">Process Payment</text>
+
+  <!-- Multi-currency -->
+  <rect x="55" y="1150" width="155" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="133" y="1163" text-anchor="middle" font-size="10" fill="#333">💱 Multi-Currency</text>
+  <text x="133" y="1175" text-anchor="middle" font-size="9" fill="#888">(TND / EUR / USD)</text>
+
+  <line x1="133" y1="1122" x2="133" y2="1150" stroke="#333" stroke-width="1.5"/>
+  <polygon points="128,1150 133,1160 138,1150" fill="#333"/>
+
+  <!-- Theme & i18n -->
+  <rect x="290" y="1210" width="150" height="32" rx="16" fill="#fff" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="365" y="1223" text-anchor="middle" font-size="10" fill="#333">🌙 Dark/Light Theme</text>
+  <text x="365" y="1235" text-anchor="middle" font-size="10" fill="#333">🌍 EN / FR / AR (RTL)</text>
+
+  <line x1="133" y1="1182" x2="133" y2="1226" stroke="#333" stroke-width="1.5"/>
+  <line x1="133" y1="1226" x2="290" y2="1226" stroke="#333" stroke-width="1.5"/>
+  <polygon points="290,1221 300,1226 290,1231" fill="#333"/>
+
+  <!-- ===== MERGE & END ===== -->
+  <line x1="365" y1="1242" x2="365" y2="1280" stroke="#333" stroke-width="1.5"/>
+  <polygon points="365,1275 375,1285 365,1295 355,1285" fill="#333"/>
+
+  <line x1="365" y1="1295" x2="365" y2="1310" stroke="#333" stroke-width="1.5"/>
+  <polygon points="360,1310 365,1320 370,1310" fill="#333"/>
+
+  <rect x="290" y="1320" width="150" height="32" rx="16" fill="#fff" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="365" y="1340" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Platform Active</text>
+
+  <!-- Final node -->
+  <line x1="365" y1="1352" x2="365" y2="1358" stroke="#333" stroke-width="1.5"/>
+  <circle cx="365" cy="1365" r="8" fill="#fff" stroke="#333" stroke-width="2"/>
+  <circle cx="365" cy="1365" r="5" fill="#333"/>
+
+</svg>
+</div>
+</body>
+</html>

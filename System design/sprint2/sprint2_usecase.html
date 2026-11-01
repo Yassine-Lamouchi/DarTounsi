@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DarTounsi — Sprint 2: Use Case Diagram</title>
+<style>
+  body { margin: 0; padding: 20px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  h1 { text-align: center; font-size: 18px; color: #333; margin-bottom: 5px; }
+  h2 { text-align: center; font-size: 14px; color: #666; font-weight: normal; margin-top: 0; }
+  .diagram-container { display: flex; justify-content: center; overflow: auto; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>DarTounsi — Sprint 2: Intelligent Discovery</h1>
+<h2>Use Case Diagram (UML 2.0)</h2>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" width="1100" height="780">
+  <defs>
+    <marker id="arrow-open" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polyline points="0 0, 12 4, 0 8" fill="none" stroke="#333" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- System boundary -->
+  <rect x="250" y="30" width="650" height="720" rx="15" fill="#fef9f0" stroke="#e85d04" stroke-width="2"/>
+  <text x="575" y="58" text-anchor="middle" font-size="16" font-weight="bold" fill="#e85d04">DarTounsi — Sprint 2: Intelligent Discovery</text>
+
+  <!-- ===== Actors ===== -->
+  <!-- Tenant -->
+  <line x1="80" y1="200" x2="80" y2="235" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="190" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="215" x2="100" y2="215" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="235" x2="60" y2="260" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="235" x2="100" y2="260" stroke="#333" stroke-width="2"/>
+  <text x="80" y="278" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Tenant</text>
+
+  <!-- Student (specialization of Tenant) -->
+  <line x1="80" y1="420" x2="80" y2="455" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="410" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="435" x2="100" y2="435" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="455" x2="60" y2="480" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="455" x2="100" y2="480" stroke="#333" stroke-width="2"/>
+  <text x="80" y="498" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Student</text>
+
+  <!-- Generalization: Student extends Tenant -->
+  <line x1="80" y1="398" x2="80" y2="278" stroke="#333" stroke-width="1.5"/>
+  <polygon points="73,290 80,278 87,290" fill="#fff" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Owner -->
+  <line x1="80" y1="620" x2="80" y2="655" stroke="#333" stroke-width="2"/>
+  <circle cx="80" cy="610" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="60" y1="635" x2="100" y2="635" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="655" x2="60" y2="680" stroke="#333" stroke-width="2"/>
+  <line x1="80" y1="655" x2="100" y2="680" stroke="#333" stroke-width="2"/>
+  <text x="80" y="698" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Owner</text>
+
+  <!-- User (right side, generic) -->
+  <line x1="1020" y1="300" x2="1020" y2="335" stroke="#333" stroke-width="2"/>
+  <circle cx="1020" cy="290" r="12" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="1000" y1="315" x2="1040" y2="315" stroke="#333" stroke-width="2"/>
+  <line x1="1020" y1="335" x2="1000" y2="360" stroke="#333" stroke-width="2"/>
+  <line x1="1020" y1="335" x2="1040" y2="360" stroke="#333" stroke-width="2"/>
+  <text x="1020" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">User</text>
+
+  <!-- ===== Use Cases ===== -->
+  <!-- UC1: Browse Properties on Map -->
+  <ellipse cx="450" cy="110" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="107" text-anchor="middle" font-size="12" fill="#333">Browse Properties</text>
+  <text x="450" y="121" text-anchor="middle" font-size="12" fill="#333">on Interactive Map</text>
+
+  <!-- UC2: Search Near University -->
+  <ellipse cx="450" cy="195" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="192" text-anchor="middle" font-size="12" fill="#333">Search Housing Near</text>
+  <text x="450" y="206" text-anchor="middle" font-size="12" fill="#333">University</text>
+
+  <!-- UC3: Filter by Preferences -->
+  <ellipse cx="450" cy="280" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="277" text-anchor="middle" font-size="12" fill="#333">Filter Listings by</text>
+  <text x="450" y="291" text-anchor="middle" font-size="12" fill="#333">Preferences</text>
+
+  <!-- UC4: View Animated Property Cards -->
+  <ellipse cx="450" cy="370" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="367" text-anchor="middle" font-size="12" fill="#333">View Animated</text>
+  <text x="450" y="381" text-anchor="middle" font-size="12" fill="#333">Property Cards</text>
+
+  <!-- UC5: Contact Owner via WhatsApp -->
+  <ellipse cx="450" cy="460" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="457" text-anchor="middle" font-size="12" fill="#333">Contact Owner via</text>
+  <text x="450" y="471" text-anchor="middle" font-size="12" fill="#333">WhatsApp</text>
+
+  <!-- UC6: Submit Review & Rating -->
+  <ellipse cx="700" cy="195" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="192" text-anchor="middle" font-size="12" fill="#333">Submit Review</text>
+  <text x="700" y="206" text-anchor="middle" font-size="12" fill="#333">&amp; Rating</text>
+
+  <!-- UC7: Toggle Favorites -->
+  <ellipse cx="700" cy="280" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="284" text-anchor="middle" font-size="12" fill="#333">Toggle Favorites</text>
+
+  <!-- UC8: View Property Details -->
+  <ellipse cx="700" cy="370" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="367" text-anchor="middle" font-size="12" fill="#333">View Property</text>
+  <text x="700" y="381" text-anchor="middle" font-size="12" fill="#333">Details</text>
+
+  <!-- UC9: Send Rental Request -->
+  <ellipse cx="450" cy="560" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="557" text-anchor="middle" font-size="12" fill="#333">Send Rental</text>
+  <text x="450" y="571" text-anchor="middle" font-size="12" fill="#333">Request</text>
+
+  <!-- UC10: Manage Incoming Requests -->
+  <ellipse cx="450" cy="660" rx="130" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="450" y="657" text-anchor="middle" font-size="12" fill="#333">Manage Incoming</text>
+  <text x="450" y="671" text-anchor="middle" font-size="12" fill="#333">Rental Requests</text>
+
+  <!-- UC11: Send Messages -->
+  <ellipse cx="700" cy="460" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="464" text-anchor="middle" font-size="12" fill="#333">Send Messages</text>
+
+  <!-- UC12: View Similar Properties -->
+  <ellipse cx="700" cy="560" rx="120" ry="30" fill="#fff8f0" stroke="#e85d04" stroke-width="1.5"/>
+  <text x="700" y="564" text-anchor="middle" font-size="12" fill="#333">View Similar Properties</text>
+
+  <!-- ===== Associations ===== -->
+  <!-- Tenant to use cases -->
+  <line x1="100" y1="215" x2="320" y2="115" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="220" x2="320" y2="195" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="225" x2="320" y2="280" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="230" x2="320" y2="370" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="240" x2="320" y2="460" stroke="#333" stroke-width="1.2"/>
+  <line x1="100" y1="245" x2="320" y2="560" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Student to university -->
+  <line x1="100" y1="435" x2="320" y2="200" stroke="#333" stroke-width="1.2"/>
+
+  <!-- Owner to manage requests -->
+  <line x1="100" y1="640" x2="320" y2="660" stroke="#333" stroke-width="1.2"/>
+
+  <!-- User (right) associations -->
+  <line x1="1000" y1="305" x2="820" y2="200" stroke="#333" stroke-width="1.2"/>
+  <line x1="1000" y1="310" x2="820" y2="280" stroke="#333" stroke-width="1.2"/>
+  <line x1="1000" y1="315" x2="820" y2="370" stroke="#333" stroke-width="1.2"/>
+  <line x1="1000" y1="320" x2="820" y2="460" stroke="#333" stroke-width="1.2"/>
+  <line x1="1000" y1="325" x2="820" y2="560" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ===== Relationships ===== -->
+  <!-- View Property Details --include--> View Similar -->
+  <line x1="730" y1="400" x2="720" y2="530" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="740" y="470" font-size="10" fill="#555" font-style="italic">«include»</text>
+
+  <!-- Browse Map --include--> View Cards -->
+  <line x1="450" y1="140" x2="450" y2="340" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="460" y="240" font-size="10" fill="#555" font-style="italic">«include»</text>
+
+  <!-- View Details --extend--> Contact WhatsApp -->
+  <line x1="580" y1="375" x2="520" y2="435" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="530" y="395" font-size="10" fill="#555" font-style="italic">«extend»</text>
+
+  <!-- Filter by Prefs --include--> View Cards -->
+  <line x1="450" y1="310" x2="450" y2="340" stroke="#333" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow-open)"/>
+  <text x="460" y="328" font-size="10" fill="#555" font-style="italic">«include»</text>
+
+</svg>
+</div>
+</body>
+</html>

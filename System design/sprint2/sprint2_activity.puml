@@ -1,0 +1,115 @@
+@startuml Sprint2_Activity
+' ============================================
+' DarTounsi - Sprint 2: Intelligent Discovery
+' Activity Diagram (UML 2.0)
+' ============================================
+
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #E85D04
+  ArrowColor #333333
+  DiamondBackgroundColor #FFFFFF
+  DiamondBorderColor #333333
+}
+
+title Sprint 2 — Property Discovery & Rental Flow
+
+|#FEFAF0| Tenant / Student |
+|#F0F8FF| SPA Frontend |
+|#F0FFF0| Backend (API + DB) |
+
+|Tenant / Student|
+start
+:Navigate to Search Page;
+
+if (Apply Filters?) then (yes)
+  :Set Filters;
+  note right
+    City
+    Property Type
+    Price Range
+    Bedrooms
+    Furnished
+  end note
+else (no)
+endif
+
+|SPA Frontend|
+:Call Properties API\nwith filter parameters;
+
+|Backend (API + DB)|
+:Query Properties\nSELECT * JOIN users\nWHERE filters;
+:Apply Pagination\n& Sort by relevance;
+
+|SPA Frontend|
+:Render 3D Animated\nProperty Cards;
+:Apply staggeredEntrance()\nanimation;
+
+|Tenant / Student|
+:View Property Cards\non grid/map;
+
+if (Click a Property Card?) then (yes)
+  :Click Property Card;
+
+  |SPA Frontend|
+  :Fetch Property Details;
+
+  |Backend (API + DB)|
+  :SELECT property +\nreviews + area_safety;
+  :INCREMENT views_count;
+
+  |SPA Frontend|
+  :Render Detail Page;
+
+  |Tenant / Student|
+  :View Details + WhatsApp\n+ Reviews + Similar;
+
+  switch (Action?)
+    case (Rent)
+      :Click "Request to Rent";
+
+      |SPA Frontend|
+      :POST rental request;
+
+      |Backend (API + DB)|
+      :INSERT rental_request\n(status: pending);
+      :Notify Owner\n"New Rental Request";
+
+      |SPA Frontend|
+      :showToast("Request sent! ✓");
+
+    case (Favorite)
+      :Toggle Favorite ❤;
+
+      |SPA Frontend|
+      :POST toggle favorite;
+
+      |Backend (API + DB)|
+      :INSERT or DELETE\nfrom favorites;
+
+    case (Review)
+      :Submit Review & Rating ⭐;
+
+      |SPA Frontend|
+      :POST review\n(rating 1-5, comment);
+
+      |Backend (API + DB)|
+      :INSERT INTO reviews;
+      :Notify Owner\n"New Review";
+
+    case (WhatsApp)
+      :Click WhatsApp Button;
+
+      |SPA Frontend|
+      :Open WhatsApp link\n(owner's phone number);
+
+  endswitch
+
+else (no)
+endif
+
+|Tenant / Student|
+:Continue Browsing;
+stop
+
+@enduml
